@@ -172,5 +172,6 @@
 - [x] Fix CTA section showing "Create Free Account" when user is logged in (verified working on live site)
 - [ ] Ensure responsive design across all pages
 - [x] Test login flow on live site (working)
-- [ ] Fix team creation - contestId/matchId mismatch between API UUIDs and database integer IDs
-- [ ] Update team creation to auto-create contest or use API match ID directly
+- [x] Fix team creation - contestId/matchId mismatch between API UUIDs and database integer IDs
+- [x] Update team creation to use API match ID directly (pushed to GitHub)
+- [ ] Debug team creation error - Confirm button shows error when clicked on live site
