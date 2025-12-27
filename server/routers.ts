@@ -1,7 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { z } from "zod";
 import { getSessionCookieOptions } from "./_core/cookies";
-import { systemRouter } from "./_core/systemRouter";
+// systemRouter removed - not needed for Railway deployment
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { sdk } from "./_core/sdk";
 import * as db from "./db";
@@ -23,7 +23,6 @@ const INDIAN_STATES = [
 const RESTRICTED_STATES = ["Telangana", "Andhra Pradesh", "Assam", "Odisha"];
 
 export const appRouter = router({
-  system: systemRouter,
   
   // Custom Authentication Router
   auth: router({

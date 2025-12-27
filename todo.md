@@ -93,3 +93,14 @@
 - [x] Fix time display to show correct IST time (was showing local time instead of IST)
 
 - [x] Fix live match detection - show matches as live when current time is past match start time (not just when API has scores)
+
+## Railway Deployment Migration
+- [x] Migrate database schema from MySQL to PostgreSQL (Drizzle)
+- [x] Remove Manus OAuth and SDK dependencies
+- [x] Update server code to use standard Express patterns
+- [x] Create standalone JWT authentication (already using jose library)
+- [x] Update environment configuration for Railway
+- [ ] Create GitHub repository
+- [ ] Push code to GitHub
+- [ ] Deploy to Railway with PostgreSQL
+- [ ] Test deployed application

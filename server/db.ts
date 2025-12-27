@@ -1,5 +1,6 @@
-import { eq, and, gte, lte, desc, asc } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
+import { eq, and, gte, lte, desc, asc, sql } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import { 
   users, InsertUser, User,
   matches, InsertMatch, Match,
@@ -13,11 +14,13 @@ import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 
 let _db: ReturnType<typeof drizzle> | null = null;
+let _client: ReturnType<typeof postgres> | null = null;
 
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      _client = postgres(process.env.DATABASE_URL, { ssl: 'require' });
+      _db = drizzle(_client);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -88,9 +91,9 @@ export async function createUser(userData: {
       city: userData.city || null,
       isVerified: false,
       role: "user",
-    });
+    }).returning({ id: users.id });
 
-    return { success: true, userId: result[0].insertId };
+    return { success: true, userId: result[0]?.id };
   } catch (error) {
     console.error("[Database] Failed to create user:", error);
     return { success: false, error: "Failed to create account" };
@@ -249,7 +252,9 @@ export async function upsertMatch(matchData: InsertMatch): Promise<boolean> {
   if (!db) return false;
 
   try {
-    await db.insert(matches).values(matchData).onDuplicateKeyUpdate({
+    // PostgreSQL upsert using ON CONFLICT
+    await db.insert(matches).values(matchData).onConflictDoUpdate({
+      target: matches.apiMatchId,
       set: {
         name: matchData.name,
         matchType: matchData.matchType,
@@ -268,6 +273,7 @@ export async function upsertMatch(matchData: InsertMatch): Promise<boolean> {
         tossWinner: matchData.tossWinner,
         tossChoice: matchData.tossChoice,
         matchWinner: matchData.matchWinner,
+        lastUpdated: new Date(),
       },
     });
     return true;
@@ -360,8 +366,8 @@ export async function createContest(contestData: InsertContest): Promise<number 
   if (!db) return null;
 
   try {
-    const result = await db.insert(contests).values(contestData);
-    return result[0].insertId;
+    const result = await db.insert(contests).values(contestData).returning({ id: contests.id });
+    return result[0]?.id ?? null;
   } catch (error) {
     console.error("[Database] Failed to create contest:", error);
     return null;
@@ -412,8 +418,8 @@ export async function createFantasyTeam(teamData: InsertFantasyTeam): Promise<nu
   if (!db) return null;
 
   try {
-    const result = await db.insert(fantasyTeams).values(teamData);
-    return result[0].insertId;
+    const result = await db.insert(fantasyTeams).values(teamData).returning({ id: fantasyTeams.id });
+    return result[0]?.id ?? null;
   } catch (error) {
     console.error("[Database] Failed to create fantasy team:", error);
     return null;
@@ -519,16 +525,30 @@ export async function upsertMatchResult(resultData: InsertMatchResult): Promise<
   if (!db) return false;
 
   try {
-    await db.insert(matchResults).values(resultData).onDuplicateKeyUpdate({
-      set: {
-        battingPoints: resultData.battingPoints,
-        bowlingPoints: resultData.bowlingPoints,
-        fieldingPoints: resultData.fieldingPoints,
-        totalPoints: resultData.totalPoints,
-        battingStats: resultData.battingStats,
-        bowlingStats: resultData.bowlingStats,
-      },
-    });
+    // For PostgreSQL, we need to handle upsert differently
+    // First try to find existing record
+    const existing = await db.select().from(matchResults)
+      .where(and(
+        eq(matchResults.matchId, resultData.matchId),
+        eq(matchResults.playerId, resultData.playerId)
+      ))
+      .limit(1);
+
+    if (existing.length > 0) {
+      await db.update(matchResults)
+        .set({
+          battingPoints: resultData.battingPoints,
+          bowlingPoints: resultData.bowlingPoints,
+          fieldingPoints: resultData.fieldingPoints,
+          totalPoints: resultData.totalPoints,
+          battingStats: resultData.battingStats,
+          bowlingStats: resultData.bowlingStats,
+          updatedAt: new Date(),
+        })
+        .where(eq(matchResults.id, existing[0].id));
+    } else {
+      await db.insert(matchResults).values(resultData);
+    }
     return true;
   } catch (error) {
     console.error("[Database] Failed to upsert match result:", error);
@@ -554,14 +574,26 @@ export async function updateLeaderboard(contestId: number, userId: number, fanta
   if (!db) return false;
 
   try {
-    await db.insert(leaderboard).values({
-      contestId,
-      userId,
-      fantasyTeamId,
-      totalPoints,
-    }).onDuplicateKeyUpdate({
-      set: { totalPoints },
-    });
+    // Check if entry exists
+    const existing = await db.select().from(leaderboard)
+      .where(and(
+        eq(leaderboard.contestId, contestId),
+        eq(leaderboard.userId, userId)
+      ))
+      .limit(1);
+
+    if (existing.length > 0) {
+      await db.update(leaderboard)
+        .set({ totalPoints, updatedAt: new Date() })
+        .where(eq(leaderboard.id, existing[0].id));
+    } else {
+      await db.insert(leaderboard).values({
+        contestId,
+        userId,
+        fantasyTeamId,
+        totalPoints,
+      });
+    }
     return true;
   } catch (error) {
     console.error("[Database] Failed to update leaderboard:", error);
