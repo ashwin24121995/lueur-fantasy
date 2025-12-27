@@ -358,7 +358,9 @@ class CricketApiService {
   async getLiveAndUpcomingMatches(): Promise<{ live: CricScoreMatch[]; today: CricScoreMatch[]; tomorrow: CricScoreMatch[] }> {
     const matches = await this.getCricScore();
     const { todayStart, tomorrowStart, dayAfterStart } = this.getISTDateBoundaries();
+    const now = new Date();
 
+    console.log(`[CricketAPI] Current time: ${now.toISOString()}`);
     console.log(`[CricketAPI] IST Date Boundaries - Today: ${todayStart.toISOString()}, Tomorrow: ${tomorrowStart.toISOString()}, DayAfter: ${dayAfterStart.toISOString()}`);
 
     const live: CricScoreMatch[] = [];
@@ -375,13 +377,24 @@ class CricketApiService {
                           statusLower.includes("draw") ||
                           statusLower.includes("no result") ||
                           statusLower.includes("abandoned");
+      
+      // Check if match has started (current time is past match start time)
+      // For T20 matches, assume ~4 hours duration; for ODI ~9 hours; for Test ~8 hours per day
+      const matchStarted = now >= matchDate;
+      const hoursSinceStart = (now.getTime() - matchDate.getTime()) / (1000 * 60 * 60);
+      // Consider match potentially live if started within last 10 hours (covers most formats)
+      const potentiallyLive = matchStarted && hoursSinceStart < 10;
 
-      // Live match - has scores, not a fixture, not completed
-      if (hasScores && !isFixture && !isCompleted) {
+      // Live match conditions:
+      // 1. Has scores and not completed (API confirmed live)
+      // 2. OR match has started (time-based) and not marked as completed
+      const isLive = (hasScores && !isCompleted) || (potentiallyLive && !isCompleted && !isFixture);
+
+      if (isLive) {
         live.push(match);
       }
-      // Today's fixture (in IST)
-      else if (matchDate >= todayStart && matchDate < tomorrowStart && !isCompleted) {
+      // Today's fixture - hasn't started yet (in IST)
+      else if (matchDate >= now && matchDate >= todayStart && matchDate < tomorrowStart && !isCompleted) {
         todayMatches.push(match);
       }
       // Tomorrow's fixture (in IST)

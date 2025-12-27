@@ -114,14 +114,31 @@ function LiveMatchCard({ match }: { match: CricScoreMatch }) {
   );
 }
 
+// Helper function to parse API date as UTC (API returns GMT dates without Z suffix)
+function parseGMTDate(dateStr: string): Date {
+  // Add Z suffix if not present to force UTC parsing
+  const utcDateStr = dateStr.endsWith('Z') ? dateStr : dateStr + 'Z';
+  return new Date(utcDateStr);
+}
+
+// Helper to get IST date string for comparison
+function getISTDateString(date: Date): string {
+  return date.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' });
+}
+
 // Upcoming Match Card
 function UpcomingMatchCard({ match, label }: { match: CricScoreMatch; label?: string }) {
-  const matchDate = new Date(match.dateTimeGMT);
+  const matchDate = parseGMTDate(match.dateTimeGMT);
   const now = new Date();
-  const isToday = matchDate.toDateString() === now.toDateString();
-  const tomorrow = new Date(now);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  const isTomorrow = matchDate.toDateString() === tomorrow.toDateString();
+  
+  // Compare dates in IST timezone
+  const matchDateIST = getISTDateString(matchDate);
+  const todayIST = getISTDateString(now);
+  const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+  const tomorrowIST = getISTDateString(tomorrow);
+  
+  const isToday = matchDateIST === todayIST;
+  const isTomorrow = matchDateIST === tomorrowIST;
 
   // Calculate time until match
   const timeDiff = matchDate.getTime() - now.getTime();
@@ -193,11 +210,11 @@ function UpcomingMatchCard({ match, label }: { match: CricScoreMatch; label?: st
         <div className="space-y-1 text-xs text-muted-foreground mb-4">
           <div className="flex items-center gap-1">
             <Calendar className="h-3 w-3" />
-            <span>{matchDate.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' })}</span>
+            <span>{matchDate.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' })}</span>
           </div>
           <div className="flex items-center gap-1">
             <Clock className="h-3 w-3" />
-            <span>{matchDate.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })} IST</span>
+            <span>{matchDate.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' })} IST</span>
           </div>
         </div>
 

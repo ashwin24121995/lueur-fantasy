@@ -90,3 +90,6 @@
 - [x] Fix Cricket API endpoint - not returning live/today's matches
 - [x] Fix IST timezone calculation for today/tomorrow matches
 - [x] Fix API date parsing (treat as UTC)
+- [x] Fix time display to show correct IST time (was showing local time instead of IST)
+
+- [x] Fix live match detection - show matches as live when current time is past match start time (not just when API has scores)
