@@ -43,39 +43,40 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  /* LUEUR Fantasy Cricket - Green Theme */
+  --primary: oklch(0.55 0.18 145); /* Rich green */
+  --primary-foreground: oklch(0.99 0 0); /* White */
+  --sidebar-primary: oklch(0.55 0.18 145);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --chart-1: oklch(0.55 0.18 145);
+  --chart-2: oklch(0.65 0.15 145);
+  --chart-3: oklch(0.45 0.12 145);
+  --chart-4: oklch(0.75 0.1 145);
+  --chart-5: oklch(0.35 0.08 145);
+  --radius: 0.625rem;
+  --background: oklch(0.99 0 0); /* White background */
+  --foreground: oklch(0.15 0 0); /* Dark text */
+  --card: oklch(0.99 0 0);
+  --card-foreground: oklch(0.15 0 0);
+  --popover: oklch(0.99 0 0);
+  --popover-foreground: oklch(0.15 0 0);
+  --secondary: oklch(0.96 0.01 145);
+  --secondary-foreground: oklch(0.25 0 0);
+  --muted: oklch(0.95 0.01 145);
+  --muted-foreground: oklch(0.45 0 0);
+  --accent: oklch(0.92 0.05 145);
+  --accent-foreground: oklch(0.25 0.1 145);
+  --destructive: oklch(0.55 0.2 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.88 0.02 145);
+  --input: oklch(0.88 0.02 145);
+  --ring: oklch(0.55 0.18 145);
+  --sidebar: oklch(0.97 0.01 145);
+  --sidebar-foreground: oklch(0.25 0 0);
+  --sidebar-accent: oklch(0.92 0.05 145);
+  --sidebar-accent-foreground: oklch(0.25 0.1 145);
+  --sidebar-border: oklch(0.88 0.02 145);
+  --sidebar-ring: oklch(0.55 0.18 145);
 }
 
 .dark {
@@ -173,5 +174,73 @@
       padding-right: 2rem;
       max-width: 1280px; /* Standard content width */
     }
+  }
+}
+
+/* LUEUR Fantasy Cricket - Custom Utilities */
+@layer utilities {
+  /* LUEUR gradient backgrounds */
+  .lueur-gradient {
+    background: linear-gradient(135deg, oklch(0.55 0.18 145) 0%, oklch(0.45 0.15 145) 100%);
+  }
+  
+  .lueur-gradient-light {
+    background: linear-gradient(135deg, oklch(0.95 0.03 145) 0%, oklch(0.99 0 0) 100%);
+  }
+  
+  .lueur-text-gradient {
+    background: linear-gradient(135deg, oklch(0.55 0.18 145) 0%, oklch(0.45 0.15 145) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Black header/footer styling */
+  .lueur-header,
+  .lueur-footer {
+    background-color: oklch(0.1 0 0);
+    color: oklch(0.99 0 0);
+  }
+  
+  /* Card hover effects */
+  .lueur-card-hover {
+    transition: all 0.3s ease;
+  }
+  .lueur-card-hover:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  /* Match card status badges */
+  .status-live {
+    background-color: oklch(0.55 0.2 25);
+    color: white;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  .status-upcoming {
+    background-color: oklch(0.55 0.18 145);
+    color: white;
+  }
+  .status-completed {
+    background-color: oklch(0.5 0 0);
+    color: white;
+  }
+  
+  /* Cricket-specific styling */
+  .player-role-wk {
+    background-color: oklch(0.7 0.15 50);
+    color: white;
+  }
+  .player-role-bat {
+    background-color: oklch(0.55 0.18 145);
+    color: white;
+  }
+  .player-role-ar {
+    background-color: oklch(0.6 0.15 280);
+    color: white;
+  }
+  .player-role-bowl {
+    background-color: oklch(0.55 0.15 200);
+    color: white;
   }
 }

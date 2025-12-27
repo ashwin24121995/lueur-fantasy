@@ -1,0 +1,15 @@
+# robots.txt for LUEUR Fantasy Cricket
+# https://www.draftiqplay.com
+
+User-agent: *
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /api/
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /my-teams
+Disallow: /create-team/
+
+# Sitemap location
+Sitemap: https://www.draftiqplay.com/sitemap.xml

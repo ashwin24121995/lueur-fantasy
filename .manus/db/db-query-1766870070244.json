@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS playerSelections (\n  id int AUTO_INCREMENT PRIMARY KEY,\n  fantasyTeamId int NOT NULL,\n  playerId varchar(100) NOT NULL,\n  playerName varchar(255) NOT NULL,\n  playerRole varchar(100) NOT NULL,\n  teamName varchar(255) NOT NULL,\n  points int NOT NULL DEFAULT 0,\n  isCaptain boolean NOT NULL DEFAULT false,\n  isViceCaptain boolean NOT NULL DEFAULT false,\n  createdAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user Hbsm33TssSr3JiD.7cabe19dd220 --database cyjCexqm7CV2hVjJXZvr4p --execute CREATE TABLE IF NOT EXISTS playerSelections (\n  id int AUTO_INCREMENT PRIMARY KEY,\n  fantasyTeamId int NOT NULL,\n  playerId varchar(100) NOT NULL,\n  playerName varchar(255) NOT NULL,\n  playerRole varchar(100) NOT NULL,\n  teamName varchar(255) NOT NULL,\n  points int NOT NULL DEFAULT 0,\n  isCaptain boolean NOT NULL DEFAULT false,\n  isViceCaptain boolean NOT NULL DEFAULT false,\n  createdAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 57
+}
