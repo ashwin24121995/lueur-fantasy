@@ -180,6 +180,6 @@
 - [x] Update drizzle.config.ts for MySQL
 - [x] Convert schema.ts from pgTable to mysqlTable
 - [x] Update server/db.ts to use MySQL driver
-- [ ] Push to GitHub and redeploy
+- [x] Push to GitHub and redeploy
 - [ ] Test registration/login on live site
 - [ ] Test team creation on live site

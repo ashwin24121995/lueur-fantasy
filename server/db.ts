@@ -18,10 +18,12 @@ let _db: any = null;
 let _pool: mysql.Pool | null = null;
 
 export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
+  const dbUrl = process.env.DATABASE_URL || process.env.MYSQL_PUBLIC_URL;
+  if (!_db && dbUrl) {
     try {
-      _pool = mysql.createPool(process.env.DATABASE_URL);
+      _pool = mysql.createPool(dbUrl);
       _db = drizzle({ client: _pool });
+      console.log("[Database] Connected successfully to MySQL");
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
