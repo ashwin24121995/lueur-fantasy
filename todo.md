@@ -122,3 +122,25 @@
 ## Railway Database Fix
 - [x] Create database tables on Railway PostgreSQL
 - [x] Run migrations on Railway
+
+## Page Fixes for Railway Deployment
+- [ ] Check and fix Homepage
+- [ ] Check and fix Login page
+- [ ] Check and fix Register page
+- [ ] Check and fix Forgot Password page
+- [ ] Check and fix About Us page
+- [ ] Check and fix How To Play page
+- [ ] Check and fix Fantasy Cricket page
+- [ ] Check and fix Responsible Gaming page
+- [ ] Check and fix Fair Play page
+- [ ] Check and fix FAQ page
+- [ ] Check and fix Terms page
+- [ ] Check and fix Privacy page
+- [ ] Check and fix Contact page
+- [ ] Check and fix Dashboard page
+- [ ] Check and fix Profile page
+- [ ] Check and fix My Teams page
+- [ ] Check and fix Create Team page
+- [ ] Check and fix Match Results page
+
+- [ ] Fix Fantasy Cricket page - not showing matches (use same API as homepage)
