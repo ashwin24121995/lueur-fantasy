@@ -430,9 +430,21 @@ export default function CreateTeam() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2">
-                      {filteredPlayers.length === 0 ? (
+                      {players.length === 0 ? (
+                        <div className="text-center py-12">
+                          <AlertTriangle className="h-12 w-12 text-amber-500 mx-auto mb-4" />
+                          <h3 className="text-lg font-semibold mb-2">Squad Not Announced Yet</h3>
+                          <p className="text-muted-foreground mb-4 max-w-md mx-auto">
+                            The playing squad for this match has not been announced yet. 
+                            Please check back closer to the match time when teams are finalized.
+                          </p>
+                          <Button variant="outline" onClick={() => setLocation("/fantasy-cricket")}>
+                            <ArrowLeft className="h-4 w-4 mr-2" /> Browse Other Matches
+                          </Button>
+                        </div>
+                      ) : filteredPlayers.length === 0 ? (
                         <div className="text-center py-8 text-muted-foreground">
-                          No players found
+                          No players found matching your search
                         </div>
                       ) : (
                         filteredPlayers.map((player: Player) => {

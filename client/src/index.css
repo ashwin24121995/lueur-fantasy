@@ -195,11 +195,17 @@
     background-clip: text;
   }
   
-  /* Black header/footer styling */
-  .lueur-header,
+  /* Light header/footer styling - now using white backgrounds */
+  .lueur-header {
+    background-color: oklch(0.99 0 0);
+    color: oklch(0.15 0 0);
+    border-bottom: 1px solid oklch(0.9 0 0);
+  }
+  
   .lueur-footer {
-    background-color: oklch(0.1 0 0);
-    color: oklch(0.99 0 0);
+    background-color: oklch(0.97 0 0);
+    color: oklch(0.25 0 0);
+    border-top: 1px solid oklch(0.9 0 0);
   }
   
   /* Card hover effects */

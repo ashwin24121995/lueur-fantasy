@@ -14,9 +14,38 @@ import {
   User,
   Target,
   TrendingUp,
-  Clock
+  Clock,
+  Radio
 } from "lucide-react";
 import { useEffect } from "react";
+
+// Parse GMT date string to UTC Date object
+function parseGMTDate(dateStr: string): Date {
+  if (!dateStr) return new Date();
+  const cleanDate = dateStr.endsWith("Z") ? dateStr : dateStr + "Z";
+  return new Date(cleanDate);
+}
+
+// Format time in IST
+function formatTimeIST(dateStr: string): string {
+  const date = parseGMTDate(dateStr);
+  return date.toLocaleTimeString("en-IN", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Kolkata",
+  });
+}
+
+// Format date in IST
+function formatDateIST(dateStr: string): string {
+  const date = parseGMTDate(dateStr);
+  return date.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    timeZone: "Asia/Kolkata",
+  });
+}
 
 function StatCard({ 
   title, 
@@ -74,7 +103,19 @@ export default function Dashboard() {
     bestRank: null as number | null,
   };
 
-  const { data: upcomingMatches, isLoading: matchesLoading } = trpc.matches.getAll.useQuery();
+  // Use getLiveAndUpcoming for matches (same as homepage)
+  const { data: matchData, isLoading: matchesLoading } = trpc.matches.getLiveAndUpcoming.useQuery(
+    undefined,
+    {
+      refetchInterval: 30000, // Refresh every 30 seconds on dashboard
+      enabled: isAuthenticated,
+    }
+  );
+
+  const liveMatches = matchData?.live || [];
+  const todayMatches = matchData?.today || [];
+  const tomorrowMatches = matchData?.tomorrow || [];
+  const upcomingMatches = [...todayMatches, ...tomorrowMatches];
 
   if (loading) {
     return (
@@ -258,41 +299,66 @@ export default function Dashboard() {
                         </div>
                       ))}
                     </div>
-                  ) : upcomingMatches?.upcoming && upcomingMatches.upcoming.length > 0 ? (
-                    <div className="space-y-3">
-                      {upcomingMatches.upcoming.slice(0, 5).map((match: any) => {
-                        const matchDate = new Date(match.dateTimeGMT || match.date);
-                        return (
-                          <Link key={match.id} href={`/create-team/${match.id}`}>
-                            <div className="p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
-                              <p className="font-medium text-sm line-clamp-1">{match.name}</p>
-                              <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
-                                <Clock className="h-3 w-3" />
-                                <span>
-                                  {matchDate.toLocaleDateString('en-IN', { 
-                                    day: 'numeric', 
-                                    month: 'short' 
-                                  })} at {matchDate.toLocaleTimeString('en-IN', { 
-                                    hour: '2-digit', 
-                                    minute: '2-digit' 
-                                  })}
-                                </span>
-                              </div>
-                            </div>
-                          </Link>
-                        );
-                      })}
-                      <Link href="/fantasy-cricket">
-                        <Button variant="outline" className="w-full mt-2" size="sm">
-                          View All Matches
-                        </Button>
-                      </Link>
-                    </div>
                   ) : (
-                    <div className="text-center py-6">
-                      <Calendar className="h-10 w-10 text-muted-foreground mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground">No upcoming matches</p>
-                    </div>
+                    <>
+                      {/* Show Live Matches First */}
+                      {liveMatches.length > 0 && (
+                        <div className="mb-4">
+                          <p className="text-xs font-semibold text-red-500 mb-2 flex items-center gap-1">
+                            <Radio className="h-3 w-3 animate-pulse" />
+                            LIVE NOW
+                          </p>
+                          <div className="space-y-2">
+                            {liveMatches.slice(0, 2).map((match: any, index: number) => (
+                              <Link key={match.id || index} href={`/match/${match.id}`}>
+                                <div className="p-3 rounded-lg bg-red-50 border border-red-200 hover:bg-red-100 transition-colors cursor-pointer">
+                                  <p className="font-medium text-sm line-clamp-1">
+                                    {match.t1} vs {match.t2}
+                                  </p>
+                                  <p className="text-xs text-red-600 mt-1">{match.status}</p>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Upcoming Matches */}
+                      {upcomingMatches.length > 0 ? (
+                        <div className="space-y-3">
+                          {upcomingMatches.slice(0, 5).map((match: any, index: number) => (
+                            <Link key={match.id || index} href={`/create-team/${match.id}`}>
+                              <div className="p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
+                                <p className="font-medium text-sm line-clamp-1">
+                                  {match.t1} vs {match.t2}
+                                </p>
+                                <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
+                                  <Clock className="h-3 w-3" />
+                                  <span>
+                                    {formatDateIST(match.dateTimeGMT)} at {formatTimeIST(match.dateTimeGMT)} IST
+                                  </span>
+                                </div>
+                              </div>
+                            </Link>
+                          ))}
+                          <Link href="/fantasy-cricket">
+                            <Button variant="outline" className="w-full mt-2" size="sm">
+                              View All Matches
+                            </Button>
+                          </Link>
+                        </div>
+                      ) : (
+                        <div className="text-center py-6">
+                          <Calendar className="h-10 w-10 text-muted-foreground mx-auto mb-2" />
+                          <p className="text-sm text-muted-foreground">No upcoming matches</p>
+                          <Link href="/fantasy-cricket">
+                            <Button variant="outline" className="mt-3" size="sm">
+                              Browse All Matches
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
+                    </>
                   )}
                 </CardContent>
               </Card>

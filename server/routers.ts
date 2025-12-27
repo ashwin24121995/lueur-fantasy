@@ -249,6 +249,13 @@ export const appRouter = router({
         return cricketApi.getMatchScorecard(input.matchId);
       }),
 
+    // Get matches with squad data available (for team creation)
+    getMatchesWithSquad: publicProcedure.query(async () => {
+      const matches = await cricketApi.getCurrentMatches();
+      // Filter to only matches that have squad data available and haven't ended
+      return matches.filter(match => match.hasSquad === true && !match.matchEnded);
+    }),
+
     // Get match fantasy points
     getPoints: publicProcedure
       .input(z.object({ matchId: z.string(), ruleset: z.number().optional() }))

@@ -22,7 +22,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="lueur-footer">
+    <footer className="bg-gray-50 border-t border-gray-200">
       {/* Main Footer */}
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -31,10 +31,10 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2 mb-4">
               <img src="/logo.png" alt="LUEUR" className="h-10 w-auto" />
             </Link>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-gray-700 text-sm font-medium mb-2">
               LUEUR GRACE PRIVATE LIMITED
             </p>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-500 text-sm">
               India's premier free-to-play fantasy cricket platform. 
               Test your cricket knowledge and compete with friends.
             </p>
@@ -42,13 +42,13 @@ export default function Footer() {
 
           {/* Company Links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Company</h3>
+            <h3 className="text-gray-900 font-semibold mb-4">Company</h3>
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white text-sm transition-colors"
+                    className="text-gray-600 hover:text-primary text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -59,13 +59,13 @@ export default function Footer() {
 
           {/* Fantasy Links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Fantasy Cricket</h3>
+            <h3 className="text-gray-900 font-semibold mb-4">Fantasy Cricket</h3>
             <ul className="space-y-2">
               {footerLinks.fantasy.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white text-sm transition-colors"
+                    className="text-gray-600 hover:text-primary text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -76,13 +76,13 @@ export default function Footer() {
 
           {/* Legal Links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Legal</h3>
+            <h3 className="text-gray-900 font-semibold mb-4">Legal</h3>
             <ul className="space-y-2">
               {footerLinks.legal.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white text-sm transition-colors"
+                    className="text-gray-600 hover:text-primary text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -94,14 +94,14 @@ export default function Footer() {
       </div>
 
       {/* Age Restriction Banner */}
-      <div className="border-t border-gray-800">
+      <div className="border-t border-gray-200 bg-white">
         <div className="container py-4">
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-center">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center">
                 <span className="text-white font-bold text-sm">18+</span>
               </div>
-              <span className="text-gray-400 text-sm">
+              <span className="text-gray-600 text-sm">
                 This platform is for users aged 18 years and above only.
               </span>
             </div>
@@ -110,7 +110,7 @@ export default function Footer() {
       </div>
 
       {/* Geo Restriction Notice */}
-      <div className="border-t border-gray-800 bg-gray-900/50">
+      <div className="border-t border-gray-200 bg-gray-100">
         <div className="container py-3">
           <p className="text-gray-500 text-xs text-center">
             Not available in Telangana, Andhra Pradesh, Assam, and Odisha.
@@ -119,7 +119,7 @@ export default function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="border-t border-gray-800">
+      <div className="border-t border-gray-200 bg-white">
         <div className="container py-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-gray-500 text-sm">

@@ -37,7 +37,7 @@ export default function Header() {
   };
 
   return (
-    <header className="lueur-header sticky top-0 z-50 shadow-lg">
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
       <div className="container">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -53,8 +53,8 @@ export default function Header() {
                 href={link.href}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   location === link.href
-                    ? "bg-white/10 text-white"
-                    : "text-gray-300 hover:text-white hover:bg-white/5"
+                    ? "bg-primary/10 text-primary"
+                    : "text-gray-600 hover:text-primary hover:bg-gray-100"
                 }`}
               >
                 {link.label}
@@ -64,7 +64,7 @@ export default function Header() {
             {/* More dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-gray-300 hover:text-white hover:bg-white/5">
+                <Button variant="ghost" className="text-gray-600 hover:text-primary hover:bg-gray-100">
                   More <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -83,11 +83,11 @@ export default function Header() {
           {/* Auth Section */}
           <div className="hidden lg:flex items-center gap-3">
             {loading ? (
-              <div className="w-24 h-9 bg-white/10 animate-pulse rounded-lg" />
+              <div className="w-24 h-9 bg-gray-200 animate-pulse rounded-lg" />
             ) : isAuthenticated && user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="text-white hover:bg-white/10">
+                  <Button variant="ghost" className="text-gray-700 hover:bg-gray-100">
                     <User className="h-4 w-4 mr-2" />
                     {user.name || "User"}
                     <ChevronDown className="ml-1 h-4 w-4" />
@@ -122,7 +122,7 @@ export default function Header() {
             ) : (
               <>
                 <Link href="/login">
-                  <Button variant="ghost" className="text-white hover:bg-white/10">
+                  <Button variant="ghost" className="text-gray-700 hover:bg-gray-100">
                     Login
                   </Button>
                 </Link>
@@ -138,11 +138,11 @@ export default function Header() {
           {/* Mobile Menu */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild className="lg:hidden">
-              <Button variant="ghost" size="icon" className="text-white">
+              <Button variant="ghost" size="icon" className="text-gray-700">
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-80 bg-gray-900 text-white border-gray-800">
+            <SheetContent side="right" className="w-80 bg-white text-gray-900 border-gray-200">
               <div className="flex flex-col gap-6 mt-8">
                 {/* Mobile Nav Links */}
                 <nav className="flex flex-col gap-2">
@@ -153,8 +153,8 @@ export default function Header() {
                       onClick={() => setMobileMenuOpen(false)}
                       className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                         location === link.href
-                          ? "bg-white/10 text-white"
-                          : "text-gray-300 hover:text-white hover:bg-white/5"
+                          ? "bg-primary/10 text-primary"
+                          : "text-gray-600 hover:text-primary hover:bg-gray-100"
                       }`}
                     >
                       {link.label}
@@ -163,30 +163,30 @@ export default function Header() {
                 </nav>
 
                 {/* Mobile Auth */}
-                <div className="border-t border-gray-800 pt-4">
+                <div className="border-t border-gray-200 pt-4">
                   {isAuthenticated && user ? (
                     <div className="flex flex-col gap-2">
-                      <div className="px-4 py-2 text-sm text-gray-400">
-                        Signed in as <span className="text-white">{user.name}</span>
+                      <div className="px-4 py-2 text-sm text-gray-500">
+                        Signed in as <span className="text-gray-900 font-medium">{user.name}</span>
                       </div>
                       <Link
                         href="/dashboard"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5"
+                        className="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:text-primary hover:bg-gray-100"
                       >
                         Dashboard
                       </Link>
                       <Link
                         href="/my-teams"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5"
+                        className="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:text-primary hover:bg-gray-100"
                       >
                         My Teams
                       </Link>
                       <Link
                         href="/profile"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5"
+                        className="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:text-primary hover:bg-gray-100"
                       >
                         Profile
                       </Link>
@@ -195,7 +195,7 @@ export default function Header() {
                           handleLogout();
                           setMobileMenuOpen(false);
                         }}
-                        className="px-4 py-3 rounded-lg text-sm font-medium text-red-400 hover:text-red-300 hover:bg-white/5 text-left"
+                        className="px-4 py-3 rounded-lg text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 text-left"
                       >
                         Logout
                       </button>
@@ -203,7 +203,7 @@ export default function Header() {
                   ) : (
                     <div className="flex flex-col gap-2">
                       <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                        <Button variant="outline" className="w-full border-gray-700 text-white hover:bg-white/10">
+                        <Button variant="outline" className="w-full border-gray-300 text-gray-700 hover:bg-gray-100">
                           Login
                         </Button>
                       </Link>

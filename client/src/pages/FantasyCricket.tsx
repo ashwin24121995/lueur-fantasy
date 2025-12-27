@@ -319,7 +319,13 @@ export default function FantasyCricket() {
               Select a match, create your fantasy team, and compete with other cricket fans. 
               All contests are 100% free to join!
             </p>
-            {!isAuthenticated && (
+            {isAuthenticated ? (
+              <Link href="/dashboard">
+                <Button size="lg" className="bg-white text-emerald-700 hover:bg-gray-100">
+                  Go to Dashboard <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            ) : (
               <Link href="/register">
                 <Button size="lg" className="bg-white text-emerald-700 hover:bg-gray-100">
                   Register to Play <ArrowRight className="ml-2 h-4 w-4" />
@@ -459,11 +465,19 @@ export default function FantasyCricket() {
             Join thousands of cricket fans on LUEUR and experience the thrill of fantasy cricket. It's 100% free!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register">
-              <Button size="lg" className="bg-white text-emerald-700 hover:bg-gray-100">
-                Create Free Account
-              </Button>
-            </Link>
+            {isAuthenticated ? (
+              <Link href="/fantasy-cricket">
+                <Button size="lg" className="bg-white text-emerald-700 hover:bg-gray-100">
+                  Browse Matches
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/register">
+                <Button size="lg" className="bg-white text-emerald-700 hover:bg-gray-100">
+                  Create Free Account
+                </Button>
+              </Link>
+            )}
             <Link href="/how-to-play">
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
                 Learn How to Play

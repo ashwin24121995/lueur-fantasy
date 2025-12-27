@@ -102,11 +102,13 @@
 - [x] Update environment configuration for Railway
 - [x] Create GitHub repository (https://github.com/ashwin24121995/lueur-fantasy)
 - [x] Push code to GitHub
-- [ ] Deploy to Railway with PostgreSQL
-- [ ] Test deployed application
+- [x] Deploy to Railway with PostgreSQL
+- [x] Test deployed application
 
 ## Railway Deployment Bug Fix
-- [ ] Fix Invalid URL error on Railway deployment (TypeError: Failed to construct 'URL')
+- [x] Fix Invalid URL error on Railway deployment (TypeError: Failed to construct 'URL')
+- [x] Remove Manus-specific environment variables
+- [x] Optimize images (PNG to JPG) for faster loading
 
 ## Homepage Enhancement
 - [x] Generate realistic cricket-themed hero image
@@ -124,23 +126,44 @@
 - [x] Run migrations on Railway
 
 ## Page Fixes for Railway Deployment
-- [ ] Check and fix Homepage
-- [ ] Check and fix Login page
-- [ ] Check and fix Register page
-- [ ] Check and fix Forgot Password page
-- [ ] Check and fix About Us page
-- [ ] Check and fix How To Play page
-- [ ] Check and fix Fantasy Cricket page
-- [ ] Check and fix Responsible Gaming page
-- [ ] Check and fix Fair Play page
-- [ ] Check and fix FAQ page
-- [ ] Check and fix Terms page
-- [ ] Check and fix Privacy page
-- [ ] Check and fix Contact page
-- [ ] Check and fix Dashboard page
-- [ ] Check and fix Profile page
-- [ ] Check and fix My Teams page
-- [ ] Check and fix Create Team page
-- [ ] Check and fix Match Results page
+- [x] Check and fix Homepage
+- [x] Check and fix Login page
+- [x] Check and fix Register page
+- [x] Check and fix Forgot Password page
+- [x] Check and fix About Us page
+- [x] Check and fix How To Play page
+- [x] Check and fix Fantasy Cricket page
+- [x] Check and fix Responsible Gaming page
+- [x] Check and fix Fair Play page
+- [x] Check and fix FAQ page
+- [x] Check and fix Terms page
+- [x] Check and fix Privacy page
+- [x] Check and fix Contact page
+- [x] Check and fix Dashboard page
+- [x] Check and fix Profile page
+- [x] Check and fix My Teams page
+- [x] Check and fix Create Team page
+- [x] Check and fix Match Results page
 
-- [ ] Fix Fantasy Cricket page - not showing matches (use same API as homepage)
+- [x] Fix Fantasy Cricket page - not showing matches (use same API as homepage)
+
+## Login State CTA Updates
+- [x] Test registration flow
+- [x] Update Header to show Dashboard/Logout when logged in instead of Login/Register
+- [x] Update Homepage CTAs to show "Go to Dashboard" instead of "Register" when logged in
+- [x] Update How To Play page CTAs for logged-in state
+- [x] Update Fantasy Cricket page CTAs for logged-in state
+- [x] Fix Dashboard to fetch and display upcoming matches from API
+- [x] Improve CreateTeam page with better messaging when squad not available
+- [ ] Test all pages with logged-in user
+
+## Light Theme Migration
+- [x] Update ThemeProvider to use light theme as default
+- [x] Update index.css with light theme color variables
+- [x] Update Layout component (header/footer) for light theme
+- [x] Update Homepage for light theme (already light)
+- [x] Update Login/Register pages for light theme (already light)
+- [x] Update Dashboard pages for light theme (already light)
+- [x] Update all other pages for light theme compatibility
+- [ ] Push to GitHub
+- [ ] Test on Railway deployment

@@ -1,5 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { motion, AnimatePresence } from "framer-motion";
 import { trpc } from "@/lib/trpc";
 import Layout from "@/components/Layout";
@@ -454,6 +455,7 @@ function UpcomingMatchCard({ match }: { match: CricScoreMatch }) {
 }
 
 export default function Home() {
+  const { isAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [lastRefresh, setLastRefresh] = useState(new Date());
 
@@ -720,15 +722,27 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mt-12"
           >
-            <Link href="/register">
-              <Button
-                size="lg"
-                className="bg-white text-emerald-700 hover:bg-gray-100 px-8 py-6 text-lg rounded-full shadow-lg"
-              >
-                <Sparkles className="w-5 h-5 mr-2" />
-                Start Playing Now - It's Free!
-              </Button>
-            </Link>
+            {isAuthenticated ? (
+              <Link href="/fantasy-cricket">
+                <Button
+                  size="lg"
+                  className="bg-white text-emerald-700 hover:bg-gray-100 px-8 py-6 text-lg rounded-full shadow-lg"
+                >
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Browse Matches
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/register">
+                <Button
+                  size="lg"
+                  className="bg-white text-emerald-700 hover:bg-gray-100 px-8 py-6 text-lg rounded-full shadow-lg"
+                >
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Start Playing Now - It's Free!
+                </Button>
+              </Link>
+            )}
           </motion.div>
         </div>
       </section>
@@ -760,14 +774,25 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/register">
-                  <Button
-                    size="lg"
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-lg rounded-full whitespace-nowrap"
-                  >
-                    Create Free Account
-                  </Button>
-                </Link>
+                {isAuthenticated ? (
+                  <Link href="/dashboard">
+                    <Button
+                      size="lg"
+                      className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-lg rounded-full whitespace-nowrap"
+                    >
+                      Go to Dashboard
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link href="/register">
+                    <Button
+                      size="lg"
+                      className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-lg rounded-full whitespace-nowrap"
+                    >
+                      Create Free Account
+                    </Button>
+                  </Link>
+                )}
                 <Link href="/how-to-play">
                   <Button
                     size="lg"

@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { 
   UserPlus, 
   Search, 
@@ -15,6 +16,8 @@ import {
 } from "lucide-react";
 
 export default function HowToPlay() {
+  const { isAuthenticated } = useAuth();
+
   const steps = [
     {
       number: 1,
@@ -311,19 +314,38 @@ export default function HowToPlay() {
             <CardContent className="py-12 text-center">
               <h2 className="text-3xl font-bold mb-4">Ready to Start Playing?</h2>
               <p className="text-white/80 mb-8">
-                Create your free account and start building your fantasy cricket team today!
+                {isAuthenticated 
+                  ? "Browse upcoming matches and create your fantasy cricket team now!"
+                  : "Create your free account and start building your fantasy cricket team today!"}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/register">
-                  <Button size="lg" variant="secondary">
-                    Create Free Account <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link href="/fantasy-cricket">
-                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                    Browse Matches
-                  </Button>
-                </Link>
+                {isAuthenticated ? (
+                  <>
+                    <Link href="/fantasy-cricket">
+                      <Button size="lg" variant="secondary">
+                        Browse Matches <ArrowRight className="ml-2 h-5 w-5" />
+                      </Button>
+                    </Link>
+                    <Link href="/dashboard">
+                      <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                        Go to Dashboard
+                      </Button>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/register">
+                      <Button size="lg" variant="secondary">
+                        Create Free Account <ArrowRight className="ml-2 h-5 w-5" />
+                      </Button>
+                    </Link>
+                    <Link href="/fantasy-cricket">
+                      <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                        Browse Matches
+                      </Button>
+                    </Link>
+                  </>
+                )}
               </div>
             </CardContent>
           </Card>

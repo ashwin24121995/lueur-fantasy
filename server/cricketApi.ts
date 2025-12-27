@@ -522,3 +522,10 @@ class CricketApiService {
 }
 
 export const cricketApi = new CricketApiService();
+
+// Additional method to get matches with squad data available
+export async function getMatchesWithSquad(): Promise<MatchData[]> {
+  const matches = await cricketApi.getCurrentMatches();
+  // Filter to only matches that have squad data available
+  return matches.filter(match => match.hasSquad === true && !match.matchEnded);
+}
