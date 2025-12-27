@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS fantasy_teams (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  user_id INT NOT NULL,\n  contest_id INT,\n  api_match_id VARCHAR(100) NOT NULL,\n  match_name VARCHAR(500),\n  team_name VARCHAR(100),\n  captain_player_id VARCHAR(100) NOT NULL,\n  vice_captain_player_id VARCHAR(100) NOT NULL,\n  total_points INT DEFAULT 0 NOT NULL,\n  `rank` INT,\n  status ENUM('draft', 'submitted', 'locked') DEFAULT 'draft' NOT NULL,\n  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,\n  FOREIGN KEY (user_id) REFERENCES users(id)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user Hbsm33TssSr3JiD.7cabe19dd220 --database cyjCexqm7CV2hVjJXZvr4p --execute CREATE TABLE IF NOT EXISTS fantasy_teams (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  user_id INT NOT NULL,\n  contest_id INT,\n  api_match_id VARCHAR(100) NOT NULL,\n  match_name VARCHAR(500),\n  team_name VARCHAR(100),\n  captain_player_id VARCHAR(100) NOT NULL,\n  vice_captain_player_id VARCHAR(100) NOT NULL,\n  total_points INT DEFAULT 0 NOT NULL,\n  `rank` INT,\n  status ENUM('draft', 'submitted', 'locked') DEFAULT 'draft' NOT NULL,\n  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,\n  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,\n  FOREIGN KEY (user_id) REFERENCES users(id)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 361
+}

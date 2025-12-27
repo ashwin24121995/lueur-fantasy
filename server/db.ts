@@ -1,6 +1,6 @@
 import { eq, and, gte, lte, desc, asc, sql } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
+import { drizzle } from "drizzle-orm/mysql2";
+import mysql from "mysql2/promise";
 import { 
   users, InsertUser, User,
   matches, InsertMatch, Match,
@@ -13,14 +13,15 @@ import {
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 
-let _db: ReturnType<typeof drizzle> | null = null;
-let _client: ReturnType<typeof postgres> | null = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let _db: any = null;
+let _pool: mysql.Pool | null = null;
 
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _client = postgres(process.env.DATABASE_URL, { ssl: 'require' });
-      _db = drizzle(_client);
+      _pool = mysql.createPool(process.env.DATABASE_URL);
+      _db = drizzle({ client: _pool });
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -91,9 +92,11 @@ export async function createUser(userData: {
       city: userData.city || null,
       isVerified: false,
       role: "user",
-    }).returning({ id: users.id });
+    });
 
-    return { success: true, userId: result[0]?.id };
+    // MySQL returns insertId in the result
+    const insertId = (result as any)[0]?.insertId;
+    return { success: true, userId: insertId };
   } catch (error) {
     console.error("[Database] Failed to create user:", error);
     return { success: false, error: "Failed to create account" };
@@ -252,9 +255,8 @@ export async function upsertMatch(matchData: InsertMatch): Promise<boolean> {
   if (!db) return false;
 
   try {
-    // PostgreSQL upsert using ON CONFLICT
-    await db.insert(matches).values(matchData).onConflictDoUpdate({
-      target: matches.apiMatchId,
+    // MySQL upsert using ON DUPLICATE KEY UPDATE
+    await db.insert(matches).values(matchData).onDuplicateKeyUpdate({
       set: {
         name: matchData.name,
         matchType: matchData.matchType,
@@ -366,7 +368,7 @@ export async function createContest(contestData: InsertContest): Promise<number 
   if (!db) return null;
 
   try {
-    const result = await db.insert(contests).values(contestData).returning({ id: contests.id });
+    const result = await db.insert(contests).values(contestData).$returningId();
     return result[0]?.id ?? null;
   } catch (error) {
     console.error("[Database] Failed to create contest:", error);
@@ -418,7 +420,7 @@ export async function createFantasyTeam(teamData: InsertFantasyTeam): Promise<nu
   if (!db) return null;
 
   try {
-    const result = await db.insert(fantasyTeams).values(teamData).returning({ id: fantasyTeams.id });
+    const result = await db.insert(fantasyTeams).values(teamData).$returningId();
     return result[0]?.id ?? null;
   } catch (error) {
     console.error("[Database] Failed to create fantasy team:", error);
@@ -623,7 +625,7 @@ export async function getContestLeaderboard(contestId: number): Promise<Array<{ 
     .where(eq(leaderboard.contestId, contestId))
     .orderBy(desc(leaderboard.totalPoints));
 
-  return result.map((entry, index) => ({
+  return result.map((entry: typeof result[number], index: number) => ({
     userId: entry.userId,
     fantasyTeamId: entry.fantasyTeamId,
     totalPoints: entry.totalPoints,

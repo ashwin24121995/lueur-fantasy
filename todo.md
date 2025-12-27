@@ -175,3 +175,11 @@
 - [x] Fix team creation - contestId/matchId mismatch between API UUIDs and database integer IDs
 - [x] Update team creation to use API match ID directly (pushed to GitHub)
 - [ ] Debug team creation error - Confirm button shows error when clicked on live site
+## MySQL Database Conversion
+- [x] Install mysql2 dependency
+- [x] Update drizzle.config.ts for MySQL
+- [x] Convert schema.ts from pgTable to mysqlTable
+- [x] Update server/db.ts to use MySQL driver
+- [ ] Push to GitHub and redeploy
+- [ ] Test registration/login on live site
+- [ ] Test team creation on live site
