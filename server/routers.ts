@@ -354,11 +354,19 @@ export const appRouter = router({
         return { hasTeam: !!team, team };
       }),
 
-    // Create fantasy team
+    // Check if user has team for a match (by API match ID)
+    hasTeamForMatch: protectedProcedure
+      .input(z.object({ apiMatchId: z.string() }))
+      .query(async ({ input, ctx }) => {
+        const team = await db.getUserTeamForMatch(ctx.user.id, input.apiMatchId);
+        return { hasTeam: !!team, team };
+      }),
+
+    // Create fantasy team - uses API match ID directly
     create: protectedProcedure
       .input(z.object({
-        contestId: z.number(),
-        matchId: z.number(),
+        apiMatchId: z.string(), // API match ID (UUID)
+        matchName: z.string().optional(), // Match name for display
         teamName: z.string().optional(),
         captainPlayerId: z.string(),
         viceCaptainPlayerId: z.string(),
@@ -394,12 +402,12 @@ export const appRouter = router({
           });
         }
 
-        // Check if user already has a team for this contest
-        const existingTeam = await db.getUserTeamForContest(ctx.user.id, input.contestId);
+        // Check if user already has a team for this match
+        const existingTeam = await db.getUserTeamForMatch(ctx.user.id, input.apiMatchId);
         if (existingTeam) {
           throw new TRPCError({
             code: "BAD_REQUEST",
-            message: "You already have a team for this contest",
+            message: "You already have a team for this match",
           });
         }
 
@@ -439,8 +447,8 @@ export const appRouter = router({
         // Create the team
         const teamId = await db.createFantasyTeam({
           userId: ctx.user.id,
-          contestId: input.contestId,
-          matchId: input.matchId,
+          apiMatchId: input.apiMatchId,
+          matchName: input.matchName,
           teamName: input.teamName,
           captainPlayerId: input.captainPlayerId,
           viceCaptainPlayerId: input.viceCaptainPlayerId,
@@ -466,9 +474,6 @@ export const appRouter = router({
         }));
 
         await db.addPlayerSelections(selections);
-
-        // Update contest participants
-        await db.updateContestParticipants(input.contestId, 1);
 
         return { success: true, teamId };
       }),

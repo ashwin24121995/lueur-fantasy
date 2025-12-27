@@ -93,12 +93,13 @@ export const contests = pgTable("contests", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-// User fantasy teams
+// User fantasy teams - updated to use API match ID directly
 export const fantasyTeams = pgTable("fantasy_teams", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => users.id),
-  contestId: integer("contest_id").notNull().references(() => contests.id),
-  matchId: integer("match_id").notNull().references(() => matches.id),
+  contestId: integer("contest_id"), // Made optional - can be null for direct team creation
+  apiMatchId: varchar("api_match_id", { length: 100 }).notNull(), // Use API match ID directly
+  matchName: varchar("match_name", { length: 500 }), // Store match name for display
   teamName: varchar("team_name", { length: 100 }),
   captainPlayerId: varchar("captain_player_id", { length: 100 }).notNull(),
   viceCaptainPlayerId: varchar("vice_captain_player_id", { length: 100 }).notNull(),
@@ -151,16 +152,21 @@ export const leaderboard = pgTable("leaderboard", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-// Type exports
-export type User = typeof users.$inferSelect;
+// Types for inserts
 export type InsertUser = typeof users.$inferInsert;
-export type Match = typeof matches.$inferSelect;
+export type User = typeof users.$inferSelect;
+
 export type InsertMatch = typeof matches.$inferInsert;
-export type Contest = typeof contests.$inferSelect;
+export type Match = typeof matches.$inferSelect;
+
 export type InsertContest = typeof contests.$inferInsert;
-export type FantasyTeam = typeof fantasyTeams.$inferSelect;
+export type Contest = typeof contests.$inferSelect;
+
 export type InsertFantasyTeam = typeof fantasyTeams.$inferInsert;
-export type PlayerSelection = typeof playerSelections.$inferSelect;
+export type FantasyTeam = typeof fantasyTeams.$inferSelect;
+
 export type InsertPlayerSelection = typeof playerSelections.$inferInsert;
-export type MatchResult = typeof matchResults.$inferSelect;
+export type PlayerSelection = typeof playerSelections.$inferSelect;
+
 export type InsertMatchResult = typeof matchResults.$inferInsert;
+export type MatchResult = typeof matchResults.$inferSelect;

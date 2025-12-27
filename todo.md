@@ -165,5 +165,12 @@
 - [x] Update Login/Register pages for light theme (already light)
 - [x] Update Dashboard pages for light theme (already light)
 - [x] Update all other pages for light theme compatibility
-- [ ] Push to GitHub
+- [x] Push to GitHub
 - [ ] Test on Railway deployment
+
+## Bug Fixes - Dec 28
+- [x] Fix CTA section showing "Create Free Account" when user is logged in (verified working on live site)
+- [ ] Ensure responsive design across all pages
+- [x] Test login flow on live site (working)
+- [ ] Fix team creation - contestId/matchId mismatch between API UUIDs and database integer IDs
+- [ ] Update team creation to auto-create contest or use API match ID directly

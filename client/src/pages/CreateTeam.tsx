@@ -241,11 +241,10 @@ export default function CreateTeam() {
       return;
     }
 
-    // For now, we'll create a default contest or use match ID
-    // In a real app, you'd select a contest first
+    // Create team using API match ID directly
     createTeamMutation.mutate({
-      contestId: 1, // Default contest - in real app, this would be selected
-      matchId: parseInt(matchId || "0"),
+      apiMatchId: matchId || "",
+      matchName: matchData?.name,
       teamName: teamName || `Team ${Date.now()}`,
       captainPlayerId: captainId,
       viceCaptainPlayerId: viceCaptainId,

@@ -459,6 +459,20 @@ export async function getUserTeamForContest(userId: number, contestId: number): 
   return result.length > 0 ? result[0] : undefined;
 }
 
+export async function getUserTeamForMatch(userId: number, apiMatchId: string): Promise<FantasyTeam | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(fantasyTeams)
+    .where(and(
+      eq(fantasyTeams.userId, userId),
+      eq(fantasyTeams.apiMatchId, apiMatchId)
+    ))
+    .limit(1);
+
+  return result.length > 0 ? result[0] : undefined;
+}
+
 export async function updateFantasyTeamPoints(teamId: number, points: number, rank?: number): Promise<boolean> {
   const db = await getDb();
   if (!db) return false;
