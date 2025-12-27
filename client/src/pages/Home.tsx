@@ -30,28 +30,28 @@ import {
 // Hero slider images
 const heroSlides = [
   {
-    image: "/images/hero-cricket.png",
+    image: "/images/hero-cricket.jpg",
     title: "Experience the Thrill of Fantasy Cricket",
     subtitle: "Create your dream team and compete with players across India",
     cta: "Start Playing Now",
     ctaLink: "/fantasy-cricket",
   },
   {
-    image: "/images/team-selection.png",
+    image: "/images/team-selection.jpg",
     title: "Build Your Dream XI",
     subtitle: "Select from real cricket stars and create the ultimate fantasy team",
     cta: "Create Your Team",
     ctaLink: "/fantasy-cricket",
   },
   {
-    image: "/images/live-match.png",
+    image: "/images/live-match.jpg",
     title: "Live Match Excitement",
     subtitle: "Watch your fantasy points grow with every ball bowled",
     cta: "View Live Matches",
     ctaLink: "/fantasy-cricket",
   },
   {
-    image: "/images/winners.png",
+    image: "/images/winners.jpg",
     title: "Compete & Celebrate",
     subtitle: "Join millions of fantasy cricket enthusiasts and showcase your skills",
     cta: "Join Now - It's Free!",
