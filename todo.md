@@ -100,7 +100,10 @@
 - [x] Update server code to use standard Express patterns
 - [x] Create standalone JWT authentication (already using jose library)
 - [x] Update environment configuration for Railway
-- [ ] Create GitHub repository
-- [ ] Push code to GitHub
+- [x] Create GitHub repository (https://github.com/ashwin24121995/lueur-fantasy)
+- [x] Push code to GitHub
 - [ ] Deploy to Railway with PostgreSQL
 - [ ] Test deployed application
+
+## Railway Deployment Bug Fix
+- [ ] Fix Invalid URL error on Railway deployment (TypeError: Failed to construct 'URL')
