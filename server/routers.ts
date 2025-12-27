@@ -189,9 +189,14 @@ export const appRouter = router({
 
   // Matches Router
   matches: router({
+    // Get live and upcoming matches using cricScore API (most reliable)
+    getLiveAndUpcoming: publicProcedure.query(async () => {
+      return cricketApi.getLiveAndUpcomingMatches();
+    }),
+
     // Get all matches from API (upcoming, live, completed)
     getAll: publicProcedure.query(async () => {
-      const matches = await cricketApi.getMatches();
+      const matches = await cricketApi.getCurrentMatches();
       return {
         upcoming: cricketApi.filterUpcomingMatches(matches),
         live: cricketApi.filterLiveMatches(matches),
@@ -199,16 +204,24 @@ export const appRouter = router({
       };
     }),
 
-    // Get upcoming matches only
+    // Get upcoming matches only (using cricScore)
     getUpcoming: publicProcedure.query(async () => {
-      const matches = await cricketApi.getMatches();
-      return cricketApi.filterUpcomingMatches(matches);
+      return cricketApi.getUpcomingMatches();
     }),
 
-    // Get live matches only
+    // Get live matches only (using cricScore)
     getLive: publicProcedure.query(async () => {
-      const matches = await cricketApi.getMatches();
-      return cricketApi.filterLiveMatches(matches);
+      return cricketApi.getLiveMatches();
+    }),
+
+    // Get today's matches
+    getToday: publicProcedure.query(async () => {
+      return cricketApi.getTodayMatches();
+    }),
+
+    // Get tomorrow's matches
+    getTomorrow: publicProcedure.query(async () => {
+      return cricketApi.getTomorrowMatches();
     }),
 
     // Get fantasy-enabled upcoming matches

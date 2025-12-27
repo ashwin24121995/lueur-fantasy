@@ -20,6 +20,22 @@ export interface Score {
   inning: string;
 }
 
+// CricScore API response type (for live scores and fixtures)
+export interface CricScoreMatch {
+  id: string;
+  dateTimeGMT: string;
+  matchType: string;
+  status: string;
+  ms: string; // "fixture" for upcoming, or contains score info for live/completed
+  t1: string; // Team 1 name with shortcode
+  t2: string; // Team 2 name with shortcode
+  t1s: string; // Team 1 score (empty for fixtures)
+  t2s: string; // Team 2 score (empty for fixtures)
+  t1img: string;
+  t2img: string;
+  series: string;
+}
+
 export interface MatchData {
   id: string;
   name: string;
@@ -32,6 +48,7 @@ export interface MatchData {
   teamInfo: TeamInfo[];
   score?: Score[];
   seriesId?: string;
+  series_id?: string;
   fantasyEnabled?: boolean;
   bbbEnabled?: boolean;
   hasSquad?: boolean;
@@ -130,6 +147,8 @@ class CricketApiService {
         return null;
       }
 
+      console.log(`[CricketAPI] Calling ${endpoint} with params:`, params);
+
       const response = await axios.get<ApiResponse<T>>(`${CRICKET_API_BASE_URL}${endpoint}`, {
         params: {
           apikey: apiKey,
@@ -137,6 +156,8 @@ class CricketApiService {
         },
         timeout: 30000,
       });
+
+      console.log(`[CricketAPI] Response status: ${response.data.status}, data count: ${Array.isArray(response.data.data) ? response.data.data.length : 'N/A'}`);
 
       if (response.data.status === "success") {
         return response.data.data;
@@ -151,7 +172,23 @@ class CricketApiService {
   }
 
   /**
-   * Get list of current and upcoming matches
+   * Get live scores and fixtures using cricScore API (most reliable for live/upcoming)
+   */
+  async getCricScore(): Promise<CricScoreMatch[]> {
+    const data = await this.makeRequest<CricScoreMatch[]>("/cricScore");
+    return data || [];
+  }
+
+  /**
+   * Get current matches with full details (includes recently completed)
+   */
+  async getCurrentMatches(offset: number = 0): Promise<MatchData[]> {
+    const data = await this.makeRequest<MatchData[]>("/currentMatches", { offset: offset.toString() });
+    return data || [];
+  }
+
+  /**
+   * Get list of matches (general list)
    */
   async getMatches(): Promise<MatchData[]> {
     const data = await this.makeRequest<MatchData[]>("/matches");
@@ -196,7 +233,181 @@ class CricketApiService {
   }
 
   /**
-   * Filter matches to get only upcoming matches (today and future)
+   * Get live matches from cricScore API
+   * Live matches have ms != "fixture" and have scores
+   */
+  async getLiveMatches(): Promise<CricScoreMatch[]> {
+    const matches = await this.getCricScore();
+    return matches.filter(match => {
+      // Live matches have scores (t1s or t2s not empty) and ms is not "fixture"
+      const hasScores = match.t1s || match.t2s;
+      const isFixture = match.ms === "fixture";
+      const isCompleted = match.status.toLowerCase().includes("won") || 
+                          match.status.toLowerCase().includes("draw") ||
+                          match.status.toLowerCase().includes("no result") ||
+                          match.status.toLowerCase().includes("abandoned");
+      return hasScores && !isFixture && !isCompleted;
+    });
+  }
+
+  /**
+   * Get upcoming matches (fixtures) from cricScore API
+   */
+  async getUpcomingMatches(): Promise<CricScoreMatch[]> {
+    const matches = await this.getCricScore();
+    const now = new Date();
+    
+    return matches.filter(match => {
+      const isFixture = match.ms === "fixture";
+      const matchDate = new Date(match.dateTimeGMT);
+      return isFixture && matchDate >= now;
+    }).sort((a, b) => {
+      const dateA = new Date(a.dateTimeGMT);
+      const dateB = new Date(b.dateTimeGMT);
+      return dateA.getTime() - dateB.getTime();
+    });
+  }
+
+  /**
+   * Get today's matches from cricScore API
+   */
+  async getTodayMatches(): Promise<CricScoreMatch[]> {
+    const matches = await this.getCricScore();
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    return matches.filter(match => {
+      const matchDate = new Date(match.dateTimeGMT);
+      return matchDate >= today && matchDate < tomorrow;
+    }).sort((a, b) => {
+      const dateA = new Date(a.dateTimeGMT);
+      const dateB = new Date(b.dateTimeGMT);
+      return dateA.getTime() - dateB.getTime();
+    });
+  }
+
+  /**
+   * Get tomorrow's matches from cricScore API
+   */
+  async getTomorrowMatches(): Promise<CricScoreMatch[]> {
+    const matches = await this.getCricScore();
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const dayAfter = new Date(tomorrow);
+    dayAfter.setDate(dayAfter.getDate() + 1);
+    
+    return matches.filter(match => {
+      const matchDate = new Date(match.dateTimeGMT);
+      return matchDate >= tomorrow && matchDate < dayAfter;
+    }).sort((a, b) => {
+      const dateA = new Date(a.dateTimeGMT);
+      const dateB = new Date(b.dateTimeGMT);
+      return dateA.getTime() - dateB.getTime();
+    });
+  }
+
+  /**
+   * Parse API date string as UTC
+   * API returns dates like "2025-12-28T08:25:00" which are in GMT/UTC
+   */
+  private parseApiDateAsUTC(dateStr: string): Date {
+    // If the date string doesn't have a timezone, append 'Z' to treat as UTC
+    if (!dateStr.endsWith('Z') && !dateStr.includes('+') && !dateStr.includes('-', 10)) {
+      return new Date(dateStr + 'Z');
+    }
+    return new Date(dateStr);
+  }
+
+  /**
+   * Get IST (Indian Standard Time) date boundaries
+   * IST is UTC+5:30
+   */
+  private getISTDateBoundaries(): { todayStart: Date; tomorrowStart: Date; dayAfterStart: Date } {
+    const now = new Date();
+    // IST offset is +5:30 = 330 minutes
+    const IST_OFFSET_MS = 330 * 60 * 1000;
+    
+    // Get current time in IST
+    const istNow = new Date(now.getTime() + IST_OFFSET_MS);
+    
+    // Get today's midnight in IST, then convert to UTC
+    // Today in IST starts at 00:00 IST = 18:30 previous day UTC
+    const todayMidnightIST = new Date(Date.UTC(
+      istNow.getUTCFullYear(),
+      istNow.getUTCMonth(),
+      istNow.getUTCDate(),
+      0, 0, 0, 0
+    ));
+    // Convert IST midnight to UTC (subtract 5:30)
+    const todayStart = new Date(todayMidnightIST.getTime() - IST_OFFSET_MS);
+    
+    const tomorrowStart = new Date(todayStart.getTime() + 24 * 60 * 60 * 1000);
+    const dayAfterStart = new Date(tomorrowStart.getTime() + 24 * 60 * 60 * 1000);
+    
+    return { todayStart, tomorrowStart, dayAfterStart };
+  }
+
+  /**
+   * Get all live and upcoming matches combined
+   * Uses IST timezone for today/tomorrow calculations
+   */
+  async getLiveAndUpcomingMatches(): Promise<{ live: CricScoreMatch[]; today: CricScoreMatch[]; tomorrow: CricScoreMatch[] }> {
+    const matches = await this.getCricScore();
+    const { todayStart, tomorrowStart, dayAfterStart } = this.getISTDateBoundaries();
+
+    console.log(`[CricketAPI] IST Date Boundaries - Today: ${todayStart.toISOString()}, Tomorrow: ${tomorrowStart.toISOString()}, DayAfter: ${dayAfterStart.toISOString()}`);
+
+    const live: CricScoreMatch[] = [];
+    const todayMatches: CricScoreMatch[] = [];
+    const tomorrowMatches: CricScoreMatch[] = [];
+
+    for (const match of matches) {
+      // Parse API date as UTC (API returns dates in GMT)
+      const matchDate = this.parseApiDateAsUTC(match.dateTimeGMT);
+      const hasScores = match.t1s || match.t2s;
+      const isFixture = match.ms === "fixture";
+      const statusLower = (match.status || "").toLowerCase();
+      const isCompleted = statusLower.includes("won") || 
+                          statusLower.includes("draw") ||
+                          statusLower.includes("no result") ||
+                          statusLower.includes("abandoned");
+
+      // Live match - has scores, not a fixture, not completed
+      if (hasScores && !isFixture && !isCompleted) {
+        live.push(match);
+      }
+      // Today's fixture (in IST)
+      else if (matchDate >= todayStart && matchDate < tomorrowStart && !isCompleted) {
+        todayMatches.push(match);
+      }
+      // Tomorrow's fixture (in IST)
+      else if (matchDate >= tomorrowStart && matchDate < dayAfterStart && !isCompleted) {
+        tomorrowMatches.push(match);
+      }
+    }
+
+    console.log(`[CricketAPI] Found - Live: ${live.length}, Today: ${todayMatches.length}, Tomorrow: ${tomorrowMatches.length}`);
+
+    // Sort by date
+    const sortByDate = (a: CricScoreMatch, b: CricScoreMatch) => {
+      const dateA = this.parseApiDateAsUTC(a.dateTimeGMT);
+      const dateB = this.parseApiDateAsUTC(b.dateTimeGMT);
+      return dateA.getTime() - dateB.getTime();
+    };
+
+    return {
+      live: live.sort(sortByDate),
+      today: todayMatches.sort(sortByDate),
+      tomorrow: tomorrowMatches.sort(sortByDate)
+    };
+  }
+
+  /**
+   * Filter matches to get only upcoming matches (today and future) - for MatchData type
    */
   filterUpcomingMatches(matches: MatchData[]): MatchData[] {
     const now = new Date();
@@ -213,14 +424,14 @@ class CricketApiService {
   }
 
   /**
-   * Filter matches to get only live matches
+   * Filter matches to get only live matches - for MatchData type
    */
   filterLiveMatches(matches: MatchData[]): MatchData[] {
     return matches.filter(match => match.matchStarted && !match.matchEnded);
   }
 
   /**
-   * Filter matches to get only completed matches
+   * Filter matches to get only completed matches - for MatchData type
    */
   filterCompletedMatches(matches: MatchData[]): MatchData[] {
     return matches.filter(match => match.matchEnded).sort((a, b) => {
@@ -231,7 +442,7 @@ class CricketApiService {
   }
 
   /**
-   * Filter matches to get only fantasy-enabled matches
+   * Filter matches to get only fantasy-enabled matches - for MatchData type
    */
   filterFantasyEnabledMatches(matches: MatchData[]): MatchData[] {
     return matches.filter(match => match.fantasyEnabled === true);
@@ -241,7 +452,7 @@ class CricketApiService {
    * Get upcoming fantasy-enabled matches
    */
   async getUpcomingFantasyMatches(): Promise<MatchData[]> {
-    const matches = await this.getMatches();
+    const matches = await this.getCurrentMatches();
     const upcoming = this.filterUpcomingMatches(matches);
     return this.filterFantasyEnabledMatches(upcoming);
   }
@@ -250,7 +461,7 @@ class CricketApiService {
    * Get live fantasy-enabled matches
    */
   async getLiveFantasyMatches(): Promise<MatchData[]> {
-    const matches = await this.getMatches();
+    const matches = await this.getCurrentMatches();
     const live = this.filterLiveMatches(matches);
     return this.filterFantasyEnabledMatches(live);
   }

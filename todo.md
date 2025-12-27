@@ -79,3 +79,14 @@
 - [x] Railway-compatible configuration
 - [x] Environment variables setup
 
+
+## Homepage Live Matches Update
+- [x] Live Matches section with real-time scores from API
+- [x] Upcoming matches for today and tomorrow with proper cards
+- [x] Auto-refresh every 5 seconds for live data
+- [x] Remove old static upcoming matches section
+
+## Bug Fixes
+- [x] Fix Cricket API endpoint - not returning live/today's matches
+- [x] Fix IST timezone calculation for today/tomorrow matches
+- [x] Fix API date parsing (treat as UTC)
