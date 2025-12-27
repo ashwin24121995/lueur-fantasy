@@ -118,3 +118,7 @@
 - [x] Add interactive hover effects
 - [x] Update header/footer with consistent logo
 - [x] Make homepage more clean and modern
+
+## Railway Database Fix
+- [x] Create database tables on Railway PostgreSQL
+- [x] Run migrations on Railway
