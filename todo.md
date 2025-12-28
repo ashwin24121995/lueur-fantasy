@@ -218,9 +218,18 @@
 - [x] Position main subjects (players) on right side of images
 - [x] Update CSS for proper responsive handling on mobile/tablet/desktop
 - [x] Ensure text never overlaps with image subjects
-- [ ] Convert hero images to WebP format for faster loading
+- [x] Convert hero images to WebP format for faster loading
 
 ## Domain and Data Cleanup - Dec 28
-- [ ] Replace all @lueur.com references with @draftiqplay.com
-- [ ] Check all pages for mock/fake/false data
-- [ ] Remove any placeholder statistics or numbers
+- [x] Replace all @lueur.com references with @draftiqplay.com
+- [x] Check all pages for mock/fake/false data (none found - only legitimate game rules)
+- [x] Remove any placeholder statistics or numbers (none found)
+
+## Dashboard Enhancement - Dec 28
+- [ ] Redesign dashboard with more features and dynamic content
+- [ ] Add user statistics section (teams created, matches played, etc.)
+- [ ] Add upcoming matches section with countdown timers
+- [ ] Add recent activity feed
+- [ ] Add quick actions section
+- [ ] Add leaderboard preview
+- [ ] Improve visual design with cards and animations
