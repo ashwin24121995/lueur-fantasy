@@ -212,3 +212,10 @@
 - [ ] Generate feature images for How To Play section
 - [ ] Ensure images are responsive and don't overlap with text
 - [ ] Push images to GitHub
+
+## Hero Image Fix - Dec 28
+- [x] Generate new hero images with clear space on left for text
+- [x] Position main subjects (players) on right side of images
+- [x] Update CSS for proper responsive handling on mobile/tablet/desktop
+- [x] Ensure text never overlaps with image subjects
+- [ ] Convert hero images to WebP format for faster loading

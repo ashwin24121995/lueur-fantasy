@@ -31,28 +31,28 @@ import {
 // Hero slider images
 const heroSlides = [
   {
-    image: "/images/hero-main.png",
+    image: "/images/hero-main.webp",
     title: "Experience the Thrill of Fantasy Cricket",
     subtitle: "Create your dream team and compete with players across India",
     cta: "Start Playing Now",
     ctaLink: "/fantasy-cricket",
   },
   {
-    image: "/images/hero-team-selection.png",
+    image: "/images/hero-team-selection.webp",
     title: "Build Your Dream XI",
     subtitle: "Select from real cricket stars and create the ultimate fantasy team",
     cta: "Create Your Team",
     ctaLink: "/fantasy-cricket",
   },
   {
-    image: "/images/hero-live-match.png",
+    image: "/images/hero-live-match.webp",
     title: "Live Match Excitement",
     subtitle: "Watch your fantasy points grow with every ball bowled",
     cta: "View Live Matches",
     ctaLink: "/fantasy-cricket",
   },
   {
-    image: "/images/hero-main.png",
+    image: "/images/hero-main.webp",
     title: "Compete & Celebrate",
     subtitle: "Join cricket enthusiasts and showcase your skills - 100% Free!",
     cta: "Join Now - It's Free!",
@@ -206,7 +206,7 @@ function HeroSlider() {
 
   return (
     <div
-      className="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden"
+      className="relative h-[400px] sm:h-[450px] md:h-[550px] lg:h-[600px] overflow-hidden"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
@@ -219,18 +219,20 @@ function HeroSlider() {
           transition={{ duration: 0.7 }}
           className="absolute inset-0"
         >
+          {/* Background image with responsive positioning */}
           <div
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 bg-cover bg-right md:bg-center"
             style={{ backgroundImage: `url(${heroSlides[currentSlide].image})` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          {/* Stronger gradient overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/30 md:from-black/85 md:via-black/50 md:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
         </motion.div>
       </AnimatePresence>
 
-      {/* Content */}
+      {/* Content - positioned on left with max-width to avoid image overlap */}
       <div className="relative z-10 h-full flex items-center">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -238,31 +240,31 @@ function HeroSlider() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="max-w-2xl"
+              className="max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl"
             >
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <Badge className="bg-emerald-500 text-white mb-4 px-4 py-1">
-                  <Sparkles className="w-4 h-4 mr-1" />
+                <Badge className="bg-emerald-500 text-white mb-3 md:mb-4 px-3 md:px-4 py-1 text-xs md:text-sm">
+                  <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1" />
                   100% Free to Play
                 </Badge>
               </motion.div>
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 md:mb-4 leading-tight drop-shadow-lg">
                 {heroSlides[currentSlide].title}
               </h1>
-              <p className="text-lg md:text-xl text-gray-200 mb-8">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-100 mb-5 md:mb-8 drop-shadow-md max-w-sm sm:max-w-md md:max-w-lg">
                 {heroSlides[currentSlide].subtitle}
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                 <Link href={heroSlides[currentSlide].ctaLink}>
                   <Button
                     size="lg"
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 md:px-8 py-5 md:py-6 text-base md:text-lg rounded-full shadow-lg shadow-emerald-500/30 transition-all hover:scale-105"
+                    className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white px-5 md:px-8 py-4 md:py-6 text-sm md:text-lg rounded-full shadow-lg shadow-emerald-500/30 transition-all hover:scale-105"
                   >
-                    <Play className="w-5 h-5 mr-2" />
+                    <Play className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                     {heroSlides[currentSlide].cta}
                   </Button>
                 </Link>
@@ -270,7 +272,7 @@ function HeroSlider() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-white text-white hover:bg-white/10 px-6 md:px-8 py-5 md:py-6 text-base md:text-lg rounded-full"
+                    className="w-full sm:w-auto border-white text-white hover:bg-white/10 px-5 md:px-8 py-4 md:py-6 text-sm md:text-lg rounded-full"
                   >
                     Learn How to Play
                   </Button>
