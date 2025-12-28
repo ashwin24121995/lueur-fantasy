@@ -196,12 +196,19 @@
 - [x] Push to GitHub and test on Railway
 
 ## UI/UX Fixes - Dec 28 (Part 2)
-- [ ] Remove mock/fake data from homepage (10L+, 500+, etc.)
-- [ ] Fix responsive CTA section ("Ready to Test Your Cricket Knowledge")
-- [ ] Add scroll to top component for all pages
-- [ ] Fix responsive images - no text overlap
-- [ ] Update Footer - add disclaimer with restricted states (Telangana, Andhra Pradesh, Assam, Odisha, Nagaland, Sikkim)
-- [ ] Add company PAN Card details and CIN number
-- [ ] Remove contact phone number from footer
-- [ ] Update copyright date to December 28, 2024
-- [ ] Ensure all pages scroll to top on navigation
+- [x] Remove mock/fake data from homepage (10L+, 500+, etc.) - replaced with feature highlights
+- [x] Fix responsive CTA section ("Ready to Test Your Cricket Knowledge")
+- [x] Add scroll to top component for all pages
+- [x] Fix responsive images - no text overlap
+- [x] Update Footer - add disclaimer with restricted states (Telangana, Andhra Pradesh, Assam, Odisha, Nagaland, Sikkim)
+- [x] Add company PAN (AADCL7173R), CIN (U36999DL2018PTC339812), GST (07AADCL7173R1ZR) details
+- [x] Remove contact phone number from footer
+- [x] Update copyright date to December 28, 2025
+- [x] Ensure all pages scroll to top on navigation
+
+
+## Hero Images Generation - Dec 28
+- [ ] Generate hero image for homepage (cricket stadium/players)
+- [ ] Generate feature images for How To Play section
+- [ ] Ensure images are responsive and don't overlap with text
+- [ ] Push images to GitHub
