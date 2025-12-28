@@ -62,8 +62,8 @@ export default function Contact() {
       icon: Mail,
       title: "Email Support",
       description: "For general inquiries and support",
-      value: "support@lueur.com",
-      action: "mailto:support@lueur.com",
+      value: "support@draftiqplay.com",
+      action: "mailto:support@draftiqplay.com",
     },
     {
       icon: MessageSquare,
@@ -330,7 +330,7 @@ export default function Contact() {
                       </div>
                       <div className="flex items-start gap-3">
                         <Globe className="h-5 w-5 text-gray-400 mt-0.5" />
-                        <p className="text-gray-600">www.lueur.com</p>
+                        <p className="text-gray-600">www.draftiqplay.com</p>
                       </div>
                     </div>
                   </CardContent>

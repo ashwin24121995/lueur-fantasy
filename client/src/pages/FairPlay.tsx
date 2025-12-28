@@ -346,7 +346,7 @@ export default function FairPlay() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-3">
                     <Mail className="h-5 w-5" />
-                    <span className="font-medium">fairplay@lueur.com</span>
+                    <span className="font-medium">fairplay@draftiqplay.com</span>
                   </div>
                   <Link href="/contact">
                     <Button className="bg-white text-blue-600 hover:bg-blue-50">

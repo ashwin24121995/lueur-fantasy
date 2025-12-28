@@ -436,7 +436,7 @@ export default function ResponsibleGaming() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-3">
                     <Mail className="h-5 w-5" />
-                    <span className="font-medium">support@lueur.com</span>
+                    <span className="font-medium">support@draftiqplay.com</span>
                   </div>
                   <Link href="/contact">
                     <Button className="bg-white text-rose-600 hover:bg-rose-50">

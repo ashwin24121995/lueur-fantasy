@@ -157,7 +157,7 @@ export default function FAQ() {
         },
         {
           q: "How do I delete my account?",
-          a: "To delete your account, please contact our support team at support@lueur.com with your registered email address and request for account deletion. Please note that account deletion is permanent and irreversible. All your data, teams, and history will be permanently removed.",
+          a: "To delete your account, please contact our support team at support@draftiqplay.com with your registered email address and request for account deletion. Please note that account deletion is permanent and irreversible. All your data, teams, and history will be permanently removed.",
         },
       ],
     },
@@ -195,7 +195,7 @@ export default function FAQ() {
         },
         {
           q: "I'm not receiving emails from LUEUR. What should I do?",
-          a: "If you're not receiving our emails: (1) Check your spam/junk folder, (2) Add support@lueur.com to your contacts, (3) Verify your email address is correct in your profile, (4) Check if your email provider is blocking our domain, (5) Contact support if issues continue.",
+          a: "If you're not receiving our emails: (1) Check your spam/junk folder, (2) Add support@draftiqplay.com to your contacts, (3) Verify your email address is correct in your profile, (4) Check if your email provider is blocking our domain, (5) Contact support if issues continue.",
         },
         {
           q: "The match points are not updating. Is this normal?",
@@ -423,7 +423,7 @@ export default function FAQ() {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <a href="mailto:support@lueur.com">
+              <a href="mailto:support@draftiqplay.com">
                 <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
                   <Mail className="mr-2 h-5 w-5" />
                   Email Us

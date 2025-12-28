@@ -162,7 +162,7 @@ export default function Terms() {
       content: [
         "These Terms shall be governed by and construed in accordance with the laws of India, without regard to its conflict of law principles.",
         "Any disputes arising from these Terms or your use of the Platform shall be subject to the exclusive jurisdiction of the courts in Mumbai, Maharashtra, India.",
-        "Before initiating any legal proceedings, you agree to first attempt to resolve any dispute informally by contacting us at legal@lueur.com.",
+        "Before initiating any legal proceedings, you agree to first attempt to resolve any dispute informally by contacting us at legal@draftiqplay.com.",
         "Any claim or cause of action arising from your use of the Platform must be filed within one (1) year after such claim or cause of action arose.",
       ],
     },
@@ -277,7 +277,7 @@ export default function Terms() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-3">
                     <Mail className="h-5 w-5" />
-                    <span className="font-medium">legal@lueur.com</span>
+                    <span className="font-medium">legal@draftiqplay.com</span>
                   </div>
                   <Link href="/contact">
                     <Button className="bg-white text-emerald-600 hover:bg-emerald-50">

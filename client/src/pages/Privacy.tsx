@@ -187,7 +187,7 @@ export default function Privacy() {
         "",
         "Withdraw Consent: Where we rely on consent, you can withdraw it at any time.",
         "",
-        "To exercise these rights, please contact us at privacy@lueur.com. We will respond to your request within 30 days.",
+        "To exercise these rights, please contact us at privacy@draftiqplay.com. We will respond to your request within 30 days.",
       ],
     },
     {
@@ -197,7 +197,7 @@ export default function Privacy() {
       content: [
         "LUEUR is not intended for users under 18 years of age. We do not knowingly collect personal information from children under 18.",
         "If we become aware that we have collected personal information from a child under 18, we will take steps to delete that information as soon as possible.",
-        "If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately at privacy@lueur.com.",
+        "If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately at privacy@draftiqplay.com.",
       ],
     },
     {
@@ -366,7 +366,7 @@ export default function Privacy() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-3">
                     <Mail className="h-5 w-5" />
-                    <span className="font-medium">privacy@lueur.com</span>
+                    <span className="font-medium">privacy@draftiqplay.com</span>
                   </div>
                   <Link href="/contact">
                     <Button className="bg-white text-purple-600 hover:bg-purple-50">
@@ -382,7 +382,7 @@ export default function Privacy() {
                 </p>
                 <div className="bg-gray-50 rounded-lg p-4">
                   <p className="text-gray-700 font-semibold">LUEUR GRACE PRIVATE LIMITED</p>
-                  <p className="text-gray-600 text-sm mt-2">Email: dpo@lueur.com</p>
+                  <p className="text-gray-600 text-sm mt-2">Email: dpo@draftiqplay.com</p>
                   <p className="text-gray-600 text-sm">Response Time: Within 30 days</p>
                 </div>
               </CardContent>

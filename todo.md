@@ -219,3 +219,8 @@
 - [x] Update CSS for proper responsive handling on mobile/tablet/desktop
 - [x] Ensure text never overlaps with image subjects
 - [ ] Convert hero images to WebP format for faster loading
+
+## Domain and Data Cleanup - Dec 28
+- [ ] Replace all @lueur.com references with @draftiqplay.com
+- [ ] Check all pages for mock/fake/false data
+- [ ] Remove any placeholder statistics or numbers
