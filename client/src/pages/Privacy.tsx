@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 
 export default function Privacy() {
-  const lastUpdated = "December 28, 2024";
+  const lastUpdated = "December 28, 2025";
   
   const sections = [
     {

@@ -92,12 +92,12 @@ const features = [
   },
 ];
 
-// Stats data
-const stats = [
-  { value: "10L+", label: "Active Players", icon: Users },
-  { value: "500+", label: "Daily Matches", icon: Calendar },
-  { value: "100%", label: "Free to Play", icon: Star },
-  { value: "24/7", label: "Live Support", icon: Shield },
+// Features highlights (no fake stats)
+const highlights = [
+  { value: "100%", label: "Free to Play", icon: Star, description: "No real money involved" },
+  { value: "Live", label: "Real-Time Updates", icon: Zap, description: "Points updated every ball" },
+  { value: "Safe", label: "Secure Platform", icon: Shield, description: "Your data is protected" },
+  { value: "24/7", label: "Available", icon: Clock, description: "Play anytime, anywhere" },
 ];
 
 // How it works steps
@@ -495,22 +495,23 @@ export default function Home() {
       {/* Hero Slider */}
       <HeroSlider />
 
-      {/* Stats Section */}
+      {/* Highlights Section */}
       <section className="py-8 bg-gradient-to-r from-emerald-600 to-emerald-700 -mt-1">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {highlights.map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center text-white"
+                className="text-center text-white p-3 md:p-4"
               >
-                <stat.icon className="w-8 h-8 mx-auto mb-2 opacity-80" />
-                <div className="text-2xl md:text-4xl font-bold">{stat.value}</div>
-                <div className="text-xs md:text-sm opacity-80">{stat.label}</div>
+                <item.icon className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 opacity-80" />
+                <div className="text-xl md:text-3xl font-bold">{item.value}</div>
+                <div className="text-xs md:text-sm font-medium">{item.label}</div>
+                <div className="text-xs opacity-70 mt-1 hidden md:block">{item.description}</div>
               </motion.div>
             ))}
           </div>
@@ -748,37 +749,37 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-20 bg-white">
+      <section className="py-12 md:py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-gray-900 to-gray-800 p-8 md:p-16"
+            className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-r from-gray-900 to-gray-800 p-6 sm:p-8 md:p-12 lg:p-16"
           >
             <div
-              className="absolute inset-0 opacity-20"
+              className="absolute inset-0 opacity-10"
               style={{
                 backgroundImage: "url(/images/hero-cricket.png)",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
             />
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="text-center md:text-left">
-                <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
+            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8">
+              <div className="text-center lg:text-left flex-1">
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2 md:mb-4">
                   Ready to Test Your Cricket Knowledge?
                 </h2>
-                <p className="text-gray-300 text-lg">
+                <p className="text-gray-300 text-sm sm:text-base md:text-lg">
                   Join LUEUR today and experience the thrill of fantasy cricket
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full sm:w-auto">
                 {isAuthenticated ? (
                   <Link href="/dashboard">
                     <Button
                       size="lg"
-                      className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-lg rounded-full whitespace-nowrap"
+                      className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 md:px-8 py-4 md:py-6 text-sm md:text-lg rounded-full whitespace-nowrap w-full sm:w-auto"
                     >
                       Go to Dashboard
                     </Button>
@@ -787,7 +788,7 @@ export default function Home() {
                   <Link href="/register">
                     <Button
                       size="lg"
-                      className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-lg rounded-full whitespace-nowrap"
+                      className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 md:px-8 py-4 md:py-6 text-sm md:text-lg rounded-full whitespace-nowrap w-full sm:w-auto"
                     >
                       Create Free Account
                     </Button>
@@ -797,7 +798,7 @@ export default function Home() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg rounded-full whitespace-nowrap"
+                    className="border-white text-white hover:bg-white/10 px-6 md:px-8 py-4 md:py-6 text-sm md:text-lg rounded-full whitespace-nowrap w-full sm:w-auto"
                   >
                     Learn More
                   </Button>

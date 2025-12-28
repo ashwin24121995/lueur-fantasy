@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 
 export default function Terms() {
-  const lastUpdated = "December 28, 2024";
+  const lastUpdated = "December 28, 2025";
   
   const sections = [
     {

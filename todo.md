@@ -193,4 +193,15 @@
 - [x] Recreate About Us page
 - [x] Recreate Contact Us page
 - [x] Recreate FAQ page with search functionality
-- [ ] Push to GitHub and test on Railway
+- [x] Push to GitHub and test on Railway
+
+## UI/UX Fixes - Dec 28 (Part 2)
+- [ ] Remove mock/fake data from homepage (10L+, 500+, etc.)
+- [ ] Fix responsive CTA section ("Ready to Test Your Cricket Knowledge")
+- [ ] Add scroll to top component for all pages
+- [ ] Fix responsive images - no text overlap
+- [ ] Update Footer - add disclaimer with restricted states (Telangana, Andhra Pradesh, Assam, Odisha, Nagaland, Sikkim)
+- [ ] Add company PAN Card details and CIN number
+- [ ] Remove contact phone number from footer
+- [ ] Update copyright date to December 28, 2024
+- [ ] Ensure all pages scroll to top on navigation

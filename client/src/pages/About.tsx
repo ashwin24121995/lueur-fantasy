@@ -53,12 +53,12 @@ export default function About() {
 
   const milestones = [
     {
-      year: "2024",
+      year: "2025",
       title: "Platform Launch",
       description: "LUEUR was born with a mission to make fantasy cricket accessible to everyone, completely free.",
     },
     {
-      year: "2024",
+      year: "2025",
       title: "Feature Expansion",
       description: "Added comprehensive match coverage including IPL, international matches, and domestic leagues.",
     },
