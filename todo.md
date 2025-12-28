@@ -183,3 +183,14 @@
 - [x] Push to GitHub and redeploy
 - [ ] Test registration/login on live site
 - [ ] Test team creation on live site
+
+## Page Redesign - Dec 28
+- [x] Recreate How To Play page with detailed content and light theme
+- [x] Recreate Fair Play page
+- [x] Recreate Terms & Conditions page
+- [x] Recreate Privacy Policy page
+- [x] Recreate Responsible Gaming page
+- [x] Recreate About Us page
+- [x] Recreate Contact Us page
+- [x] Recreate FAQ page with search functionality
+- [ ] Push to GitHub and test on Railway

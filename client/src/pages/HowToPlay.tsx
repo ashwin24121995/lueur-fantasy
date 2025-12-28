@@ -12,7 +12,13 @@ import {
   ArrowRight,
   CheckCircle,
   Star,
-  Target
+  Target,
+  Shield,
+  Zap,
+  Award,
+  Clock,
+  AlertTriangle,
+  HelpCircle
 } from "lucide-react";
 
 export default function HowToPlay() {
@@ -22,184 +28,266 @@ export default function HowToPlay() {
     {
       number: 1,
       icon: UserPlus,
-      title: "Create Your Account",
-      description: "Sign up for free with your email. You must be 18 years or older to register.",
+      title: "Create Your Free Account",
+      description: "Getting started is quick and easy. Sign up for free in just 2 minutes with your email address. Our platform is completely free to use with no hidden charges.",
       details: [
-        "Enter your basic details",
-        "Verify your age (18+)",
-        "Select your state (some restrictions apply)",
-        "Set a secure password",
+        "Enter your full name and email address",
+        "Create a strong, secure password",
+        "Verify that you are 18 years or older (mandatory)",
+        "Select your state of residence",
+        "Agree to our terms of service and privacy policy",
+        "Verify your email to activate your account"
       ],
+      tip: "Use a valid email address as you'll need it for password recovery and important notifications."
     },
     {
       number: 2,
       icon: Search,
-      title: "Select a Match",
-      description: "Browse upcoming cricket matches and choose the one you want to play.",
+      title: "Browse & Select a Match",
+      description: "Explore upcoming cricket matches from various leagues including IPL, Big Bash, PSL, CPL, and international fixtures. Choose the match you want to create your fantasy team for.",
       details: [
-        "View all upcoming matches",
-        "Check match timings",
-        "Look for fantasy-enabled matches",
-        "Select your preferred match",
+        "View all upcoming matches with date, time, and venue",
+        "See match format (T20, ODI, Test)",
+        "Check if fantasy squad data is available",
+        "View team lineups and player statistics",
+        "Note the team creation deadline",
+        "Select matches before they start"
       ],
+      tip: "Create your team well before the deadline to avoid last-minute rushes and potential issues."
     },
     {
       number: 3,
       icon: Users,
-      title: "Build Your Team",
-      description: "Create your dream team of 11 players within the given constraints.",
+      title: "Build Your Dream Team",
+      description: "This is where your cricket knowledge shines! Select 11 players from both teams to form your fantasy squad. Balance your team with the right mix of batsmen, bowlers, all-rounders, and wicket-keepers.",
       details: [
-        "Select 11 players from both teams",
-        "Choose at least 1 Wicket-Keeper",
-        "Choose at least 3 Batsmen",
-        "Choose at least 3 Bowlers",
-        "Choose at least 1 All-Rounder",
-        "Maximum 7 players from one team",
+        "Select exactly 11 players from both playing teams",
+        "Minimum 1 Wicket-Keeper (WK) required",
+        "Minimum 3 Batsmen (BAT) required",
+        "Minimum 3 Bowlers (BOWL) required",
+        "Minimum 1 All-Rounder (AR) required",
+        "Maximum 7 players from any single team",
+        "Consider player form, pitch conditions, and head-to-head records"
       ],
+      tip: "Research player recent performances and match conditions before finalizing your team."
     },
     {
       number: 4,
       icon: Star,
-      title: "Choose Captain & Vice-Captain",
-      description: "Select your Captain (2x points) and Vice-Captain (1.5x points).",
+      title: "Choose Your Captain & Vice-Captain",
+      description: "The most crucial decision! Your Captain earns 2x points and Vice-Captain earns 1.5x points. Strategic selection of these two players can make or break your fantasy team's performance.",
       details: [
-        "Captain earns 2x fantasy points",
-        "Vice-Captain earns 1.5x fantasy points",
-        "Choose players you expect to perform well",
-        "Strategic selection is key to winning",
+        "Captain (C) earns double (2x) fantasy points",
+        "Vice-Captain (VC) earns 1.5x fantasy points",
+        "Choose consistent performers or in-form players",
+        "Consider match conditions and opposition",
+        "Analyze player's record at the venue",
+        "Look at head-to-head statistics"
       ],
+      tip: "Don't always pick star players as captain. Sometimes in-form players from smaller teams can be game-changers!"
     },
     {
       number: 5,
       icon: Trophy,
-      title: "Join a Contest",
-      description: "Enter a contest and compete with other players.",
+      title: "Submit & Track Your Team",
+      description: "Once you're satisfied with your team selection, submit it before the match starts. Then sit back, watch the match, and track your team's performance in real-time!",
       details: [
-        "All contests are FREE to join",
-        "No entry fees required",
-        "Compete with friends or public",
-        "Track your ranking on leaderboard",
+        "Review your team one final time",
+        "Give your team a unique name",
+        "Submit before the match deadline",
+        "Track live fantasy points during the match",
+        "Watch your rank on the leaderboard",
+        "Compete with other fantasy players"
       ],
-    },
-    {
-      number: 6,
-      icon: Target,
-      title: "Earn Points & Win",
-      description: "Watch your team score points based on real match performance.",
-      details: [
-        "Points update in real-time",
-        "Based on actual player performance",
-        "Batting, bowling & fielding points",
-        "Climb the leaderboard to win",
-      ],
-    },
+      tip: "Keep an eye on team announcements before the deadline. Last-minute changes can affect your team!"
+    }
   ];
 
   const pointsSystem = {
     batting: [
-      { action: "Run", points: "+1" },
-      { action: "Boundary (4)", points: "+1" },
-      { action: "Six", points: "+2" },
-      { action: "Half Century (50)", points: "+8" },
-      { action: "Century (100)", points: "+16" },
-      { action: "Duck (Batsman)", points: "-2" },
+      { action: "Run Scored", points: "+1", description: "For every run scored by the batsman" },
+      { action: "Boundary Bonus (4s)", points: "+1", description: "Additional point for hitting a four" },
+      { action: "Six Bonus (6s)", points: "+2", description: "Additional points for hitting a six" },
+      { action: "Half Century (50 runs)", points: "+8", description: "Bonus for scoring 50 runs" },
+      { action: "Century (100 runs)", points: "+16", description: "Bonus for scoring 100 runs" },
+      { action: "Duck (0 runs, dismissed)", points: "-2", description: "Penalty for getting out on zero" }
     ],
     bowling: [
-      { action: "Wicket", points: "+25" },
-      { action: "Maiden Over", points: "+8" },
-      { action: "3 Wicket Haul", points: "+4" },
-      { action: "4 Wicket Haul", points: "+8" },
-      { action: "5 Wicket Haul", points: "+16" },
+      { action: "Wicket Taken", points: "+25", description: "For each wicket taken (excl. run out)" },
+      { action: "LBW/Bowled Bonus", points: "+8", description: "Extra points for LBW or bowled dismissals" },
+      { action: "Maiden Over", points: "+8", description: "For bowling a maiden over" },
+      { action: "3 Wicket Haul", points: "+4", description: "Bonus for taking 3 wickets" },
+      { action: "4 Wicket Haul", points: "+8", description: "Bonus for taking 4 wickets" },
+      { action: "5 Wicket Haul", points: "+16", description: "Bonus for taking 5+ wickets" }
     ],
     fielding: [
-      { action: "Catch", points: "+8" },
-      { action: "Stumping", points: "+12" },
-      { action: "Run Out (Direct)", points: "+12" },
-      { action: "Run Out (Indirect)", points: "+6" },
+      { action: "Catch Taken", points: "+8", description: "For each catch taken" },
+      { action: "Stumping", points: "+12", description: "For stumping a batsman" },
+      { action: "Run Out (Direct Hit)", points: "+12", description: "For direct hit run out" },
+      { action: "Run Out (Indirect)", points: "+6", description: "For indirect run out contribution" },
+      { action: "3+ Catches Bonus", points: "+4", description: "Bonus for taking 3 or more catches" }
     ],
+    other: [
+      { action: "Playing in Match", points: "+4", description: "For being in the playing XI" },
+      { action: "Captain Multiplier", points: "2x", description: "Captain earns double points" },
+      { action: "Vice-Captain Multiplier", points: "1.5x", description: "Vice-Captain earns 1.5x points" },
+      { action: "Player of the Match", points: "+25", description: "Bonus for being named POTM" }
+    ]
   };
+
+  const proTips = [
+    {
+      icon: Target,
+      title: "Research Player Form",
+      description: "Check recent performances, batting/bowling averages, and strike rates. A player in good form is more likely to perform well."
+    },
+    {
+      icon: Shield,
+      title: "Analyze Pitch Conditions",
+      description: "Pitch type matters significantly. Spin-friendly pitches favor spinners, while pace-friendly tracks benefit fast bowlers and stroke players."
+    },
+    {
+      icon: Zap,
+      title: "Consider Weather Impact",
+      description: "Weather conditions can affect gameplay. Overcast conditions often help swing bowlers, while dry conditions favor spinners."
+    },
+    {
+      icon: Award,
+      title: "Balance Your Team",
+      description: "Don't put all eggs in one basket. Spread your selections across both teams for better chances of earning points."
+    },
+    {
+      icon: Star,
+      title: "Smart Captain Selection",
+      description: "Your captain choice is crucial. Pick consistent performers or in-form players for maximum points multiplication."
+    },
+    {
+      icon: Clock,
+      title: "Monitor Team Announcements",
+      description: "Keep an eye on official team announcements. Injuries or last-minute changes can significantly affect your team."
+    }
+  ];
 
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 lueur-gradient opacity-10" />
-        <div className="container py-16 md:py-24 relative">
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-500 to-teal-500 text-white">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-700/20 to-teal-600/20 opacity-50"></div>
+        <div className="container py-16 md:py-24 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <Badge className="mb-4 lueur-gradient text-white">Guide</Badge>
+            <Badge className="mb-4 bg-white/20 text-white border-white/30 hover:bg-white/30">
+              Complete Guide
+            </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              How To Play <span className="lueur-text-gradient">Fantasy Cricket</span>
+              How To Play Fantasy Cricket
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Learn how to create your dream team and compete in fantasy cricket contests. 
-              It's easy, fun, and completely free!
+            <p className="text-lg md:text-xl text-emerald-100 mb-8">
+              Master the art of fantasy cricket in 5 simple steps. Create your dream team, 
+              compete with friends, and showcase your cricket knowledge on LUEUR!
             </p>
+            {isAuthenticated ? (
+              <Link href="/fantasy-cricket">
+                <Button size="lg" className="bg-white text-emerald-600 hover:bg-emerald-50 font-semibold px-8">
+                  Start Playing Now <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/register">
+                <Button size="lg" className="bg-white text-emerald-600 hover:bg-emerald-50 font-semibold px-8">
+                  Create Free Account <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </section>
 
       {/* Steps Section */}
-      <section className="py-16">
+      <section className="py-16 md:py-24 bg-gray-50">
         <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-8">
-              {steps.map((step, index) => (
-                <Card key={index} className="lueur-card-hover overflow-hidden">
-                  <div className="flex flex-col md:flex-row">
-                    <div className="md:w-1/3 p-6 lueur-gradient text-white flex flex-col justify-center">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-                          <span className="text-2xl font-bold">{step.number}</span>
-                        </div>
-                        <step.icon className="h-8 w-8" />
+          <div className="text-center mb-16">
+            <Badge className="mb-4">Step by Step</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              5 Simple Steps to Get Started
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Follow these easy steps to create your fantasy team and start competing with cricket fans worldwide
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto space-y-8">
+            {steps.map((step, index) => (
+              <Card key={index} className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow">
+                <div className="flex flex-col lg:flex-row">
+                  <div className="lg:w-1/3 p-8 bg-gradient-to-br from-emerald-600 to-emerald-700 text-white flex flex-col justify-center">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center">
+                        <span className="text-2xl font-bold">{step.number}</span>
                       </div>
-                      <h3 className="text-xl font-bold">{step.title}</h3>
+                      <step.icon className="h-10 w-10" />
                     </div>
-                    <div className="md:w-2/3 p-6">
-                      <p className="text-muted-foreground mb-4">{step.description}</p>
-                      <ul className="space-y-2">
-                        {step.details.map((detail, i) => (
-                          <li key={i} className="flex items-center gap-2 text-sm">
-                            <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
-                            <span>{detail}</span>
-                          </li>
-                        ))}
-                      </ul>
+                    <h3 className="text-2xl font-bold mb-2">{step.title}</h3>
+                    <p className="text-emerald-100 text-sm">{step.description}</p>
+                  </div>
+                  <div className="lg:w-2/3 p-8">
+                    <div className="grid md:grid-cols-2 gap-3 mb-6">
+                      {step.details.map((detail, i) => (
+                        <div key={i} className="flex items-start gap-3">
+                          <CheckCircle className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-gray-700">{detail}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="p-4 bg-amber-50 rounded-lg border-l-4 border-amber-400">
+                      <div className="flex items-start gap-2">
+                        <HelpCircle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <span className="font-semibold text-amber-800">Pro Tip: </span>
+                          <span className="text-amber-700">{step.tip}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </Card>
-              ))}
-            </div>
+                </div>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Points System */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 md:py-24 bg-white">
         <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Fantasy Points System</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Understand how points are calculated based on player performance.
+          <div className="text-center mb-16">
+            <Badge className="mb-4">Scoring</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Fantasy Points System
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Understand how points are calculated based on your players' real match performance
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+
+          <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {/* Batting Points */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full player-role-bat flex items-center justify-center">
-                    <span className="text-xs font-bold">BAT</span>
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-t-lg">
+                <CardTitle className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                    <span className="text-sm font-bold">BAT</span>
                   </div>
                   Batting Points
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
+              <CardContent className="p-6">
+                <div className="space-y-4">
                   {pointsSystem.batting.map((item, i) => (
-                    <div key={i} className="flex justify-between text-sm">
-                      <span>{item.action}</span>
-                      <span className={`font-semibold ${item.points.startsWith('-') ? 'text-red-500' : 'text-green-600'}`}>
+                    <div key={i} className="flex justify-between items-start border-b border-gray-100 pb-3 last:border-0">
+                      <div>
+                        <p className="font-medium text-gray-900">{item.action}</p>
+                        <p className="text-sm text-gray-500">{item.description}</p>
+                      </div>
+                      <span className={`font-bold text-lg ${item.points.startsWith('-') ? 'text-red-500' : 'text-emerald-600'}`}>
                         {item.points}
                       </span>
                     </div>
@@ -209,21 +297,24 @@ export default function HowToPlay() {
             </Card>
 
             {/* Bowling Points */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full player-role-bowl flex items-center justify-center">
-                    <span className="text-xs font-bold">BOWL</span>
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-t-lg">
+                <CardTitle className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                    <span className="text-sm font-bold">BOWL</span>
                   </div>
                   Bowling Points
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
+              <CardContent className="p-6">
+                <div className="space-y-4">
                   {pointsSystem.bowling.map((item, i) => (
-                    <div key={i} className="flex justify-between text-sm">
-                      <span>{item.action}</span>
-                      <span className="font-semibold text-green-600">{item.points}</span>
+                    <div key={i} className="flex justify-between items-start border-b border-gray-100 pb-3 last:border-0">
+                      <div>
+                        <p className="font-medium text-gray-900">{item.action}</p>
+                        <p className="text-sm text-gray-500">{item.description}</p>
+                      </div>
+                      <span className="font-bold text-lg text-emerald-600">{item.points}</span>
                     </div>
                   ))}
                 </div>
@@ -231,75 +322,210 @@ export default function HowToPlay() {
             </Card>
 
             {/* Fielding Points */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full player-role-ar flex items-center justify-center">
-                    <span className="text-xs font-bold">FLD</span>
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-t-lg">
+                <CardTitle className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                    <span className="text-sm font-bold">FLD</span>
                   </div>
                   Fielding Points
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
+              <CardContent className="p-6">
+                <div className="space-y-4">
                   {pointsSystem.fielding.map((item, i) => (
-                    <div key={i} className="flex justify-between text-sm">
-                      <span>{item.action}</span>
-                      <span className="font-semibold text-green-600">{item.points}</span>
+                    <div key={i} className="flex justify-between items-start border-b border-gray-100 pb-3 last:border-0">
+                      <div>
+                        <p className="font-medium text-gray-900">{item.action}</p>
+                        <p className="text-sm text-gray-500">{item.description}</p>
+                      </div>
+                      <span className="font-bold text-lg text-emerald-600">{item.points}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Other Points */}
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-rose-500 to-rose-600 text-white rounded-t-lg">
+                <CardTitle className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                    <Star className="h-5 w-5" />
+                  </div>
+                  Bonus & Multipliers
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  {pointsSystem.other.map((item, i) => (
+                    <div key={i} className="flex justify-between items-start border-b border-gray-100 pb-3 last:border-0">
+                      <div>
+                        <p className="font-medium text-gray-900">{item.action}</p>
+                        <p className="text-sm text-gray-500">{item.description}</p>
+                      </div>
+                      <span className="font-bold text-lg text-emerald-600">{item.points}</span>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
           </div>
-          <p className="text-center text-sm text-muted-foreground mt-6">
-            * Points may vary based on match format (T20, ODI, Test). 
-            Captain gets 2x and Vice-Captain gets 1.5x of these points.
+
+          <p className="text-center text-sm text-gray-500 mt-8 max-w-2xl mx-auto">
+            * Points may vary slightly based on match format (T20, ODI, Test). 
+            The above points are for T20 matches. Captain gets 2x and Vice-Captain gets 1.5x of all earned points.
           </p>
         </div>
       </section>
 
       {/* Team Composition Rules */}
-      <section className="py-16">
+      <section className="py-16 md:py-24 bg-gray-50">
         <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-center">Team Composition Rules</h2>
-            <Card>
-              <CardContent className="p-6">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-4 rounded-lg bg-muted">
-                    <div className="w-12 h-12 rounded-full player-role-wk mx-auto mb-2 flex items-center justify-center">
-                      <span className="text-xs font-bold">WK</span>
+          <div className="text-center mb-16">
+            <Badge className="mb-4">Rules</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Team Composition Rules
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Build a balanced team following these composition guidelines
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-0 shadow-xl">
+              <CardContent className="p-8">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                  <div className="text-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200">
+                    <div className="w-16 h-16 rounded-full bg-blue-500 mx-auto mb-4 flex items-center justify-center">
+                      <span className="text-white font-bold">WK</span>
                     </div>
-                    <p className="font-semibold">Wicket-Keeper</p>
-                    <p className="text-sm text-muted-foreground">Min: 1 | Max: 4</p>
+                    <p className="font-bold text-gray-900 text-lg">Wicket-Keeper</p>
+                    <p className="text-blue-600 font-semibold">Min: 1 | Max: 4</p>
                   </div>
-                  <div className="text-center p-4 rounded-lg bg-muted">
-                    <div className="w-12 h-12 rounded-full player-role-bat mx-auto mb-2 flex items-center justify-center">
-                      <span className="text-xs font-bold">BAT</span>
+                  <div className="text-center p-6 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200">
+                    <div className="w-16 h-16 rounded-full bg-purple-500 mx-auto mb-4 flex items-center justify-center">
+                      <span className="text-white font-bold">BAT</span>
                     </div>
-                    <p className="font-semibold">Batsmen</p>
-                    <p className="text-sm text-muted-foreground">Min: 3 | Max: 6</p>
+                    <p className="font-bold text-gray-900 text-lg">Batsmen</p>
+                    <p className="text-purple-600 font-semibold">Min: 3 | Max: 6</p>
                   </div>
-                  <div className="text-center p-4 rounded-lg bg-muted">
-                    <div className="w-12 h-12 rounded-full player-role-ar mx-auto mb-2 flex items-center justify-center">
-                      <span className="text-xs font-bold">AR</span>
+                  <div className="text-center p-6 rounded-xl bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200">
+                    <div className="w-16 h-16 rounded-full bg-amber-500 mx-auto mb-4 flex items-center justify-center">
+                      <span className="text-white font-bold">AR</span>
                     </div>
-                    <p className="font-semibold">All-Rounders</p>
-                    <p className="text-sm text-muted-foreground">Min: 1 | Max: 4</p>
+                    <p className="font-bold text-gray-900 text-lg">All-Rounders</p>
+                    <p className="text-amber-600 font-semibold">Min: 1 | Max: 4</p>
                   </div>
-                  <div className="text-center p-4 rounded-lg bg-muted">
-                    <div className="w-12 h-12 rounded-full player-role-bowl mx-auto mb-2 flex items-center justify-center">
-                      <span className="text-xs font-bold">BOWL</span>
+                  <div className="text-center p-6 rounded-xl bg-gradient-to-br from-rose-50 to-rose-100 border border-rose-200">
+                    <div className="w-16 h-16 rounded-full bg-rose-500 mx-auto mb-4 flex items-center justify-center">
+                      <span className="text-white font-bold">BOWL</span>
                     </div>
-                    <p className="font-semibold">Bowlers</p>
-                    <p className="text-sm text-muted-foreground">Min: 3 | Max: 6</p>
+                    <p className="font-bold text-gray-900 text-lg">Bowlers</p>
+                    <p className="text-rose-600 font-semibold">Min: 3 | Max: 6</p>
                   </div>
                 </div>
-                <div className="mt-6 p-4 rounded-lg bg-primary/10 border border-primary/20">
-                  <p className="text-sm text-center">
-                    <strong>Important:</strong> You can select a maximum of 7 players from any single team.
-                  </p>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="h-6 w-6 text-emerald-600" />
+                      <div>
+                        <p className="font-semibold text-gray-900">Total Players Required</p>
+                        <p className="text-emerald-600">Exactly 11 players</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4 rounded-lg bg-red-50 border border-red-200">
+                    <div className="flex items-center gap-3">
+                      <AlertTriangle className="h-6 w-6 text-red-600" />
+                      <div>
+                        <p className="font-semibold text-gray-900">Team Limit</p>
+                        <p className="text-red-600">Maximum 7 players from one team</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Pro Tips Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-slate-900 to-slate-800 text-white">
+        <div className="container">
+          <div className="text-center mb-16">
+            <Badge className="mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+              Expert Advice
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Pro Tips for Success
+            </h2>
+            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+              Expert strategies to help you build winning fantasy teams consistently
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {proTips.map((tip, index) => (
+              <Card key={index} className="bg-slate-800/50 border-slate-700 hover:bg-slate-800 transition-colors">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-emerald-500/20 text-emerald-400 p-3 rounded-xl">
+                      <tip.icon className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-white mb-2">{tip.title}</h3>
+                      <p className="text-slate-400">{tip.description}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Important Notes */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-0 shadow-xl bg-gradient-to-r from-amber-50 to-orange-50 border-l-4 border-amber-500">
+              <CardContent className="p-8">
+                <div className="flex items-start gap-4">
+                  <div className="bg-amber-500 text-white p-3 rounded-xl flex-shrink-0">
+                    <AlertTriangle className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Important Information</h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="flex items-start gap-3">
+                        <CheckCircle className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">LUEUR is a <strong>100% free-to-play</strong> fantasy cricket platform. No real money is involved.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <CheckCircle className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">You must be <strong>18 years or older</strong> to participate on our platform.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <CheckCircle className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">LUEUR is <strong>not available</strong> in Telangana, Andhra Pradesh, Assam, and Odisha.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <CheckCircle className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">Fantasy points are calculated based on <strong>official match statistics</strong>.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <CheckCircle className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">Teams <strong>cannot be edited</strong> once the match has started.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <CheckCircle className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">Play responsibly and enjoy the game of cricket!</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -308,47 +534,45 @@ export default function HowToPlay() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-emerald-600 to-emerald-700">
         <div className="container">
-          <Card className="lueur-gradient text-white max-w-3xl mx-auto">
-            <CardContent className="py-12 text-center">
-              <h2 className="text-3xl font-bold mb-4">Ready to Start Playing?</h2>
-              <p className="text-white/80 mb-8">
-                {isAuthenticated 
-                  ? "Browse upcoming matches and create your fantasy cricket team now!"
-                  : "Create your free account and start building your fantasy cricket team today!"}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                {isAuthenticated ? (
-                  <>
-                    <Link href="/fantasy-cricket">
-                      <Button size="lg" variant="secondary">
-                        Browse Matches <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
-                    <Link href="/dashboard">
-                      <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                        Go to Dashboard
-                      </Button>
-                    </Link>
-                  </>
-                ) : (
-                  <>
-                    <Link href="/register">
-                      <Button size="lg" variant="secondary">
-                        Create Free Account <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
-                    <Link href="/fantasy-cricket">
-                      <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                        Browse Matches
-                      </Button>
-                    </Link>
-                  </>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+          <div className="max-w-3xl mx-auto text-center text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to Test Your Cricket Knowledge?
+            </h2>
+            <p className="text-xl text-emerald-100 mb-8">
+              Join thousands of cricket fans and start building your dream team today!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {isAuthenticated ? (
+                <>
+                  <Link href="/fantasy-cricket">
+                    <Button size="lg" className="bg-white text-emerald-600 hover:bg-emerald-50 font-semibold px-8">
+                      Browse Matches <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                  <Link href="/dashboard">
+                    <Button size="lg" variant="outline" className="border-white text-white hover:bg-emerald-700 font-semibold px-8">
+                      Go to Dashboard
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/register">
+                    <Button size="lg" className="bg-white text-emerald-600 hover:bg-emerald-50 font-semibold px-8">
+                      Create Free Account <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                  <Link href="/login">
+                    <Button size="lg" variant="outline" className="border-white text-white hover:bg-emerald-700 font-semibold px-8">
+                      Sign In
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </section>
     </Layout>

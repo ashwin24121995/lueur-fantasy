@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS users (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  email VARCHAR(320) NOT NULL UNIQUE,\n  password_hash VARCHAR(255) NOT NULL DEFAULT '',\n  name TEXT,\n  phone VARCHAR(20),\n  date_of_birth TIMESTAMP NULL,\n  state VARCHAR(100),\n  city VARCHAR(100),\n  is_verified BOOLEAN NOT NULL DEFAULT FALSE,\n  is_blocked BOOLEAN NOT NULL DEFAULT FALSE,\n  role ENUM('user', 'admin') NOT NULL DEFAULT 'user',\n  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  last_signed_in TIMESTAMP NULL\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user Hbsm33TssSr3JiD.7cabe19dd220 --database cyjCexqm7CV2hVjJXZvr4p --execute CREATE TABLE IF NOT EXISTS users (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  email VARCHAR(320) NOT NULL UNIQUE,\n  password_hash VARCHAR(255) NOT NULL DEFAULT '',\n  name TEXT,\n  phone VARCHAR(20),\n  date_of_birth TIMESTAMP NULL,\n  state VARCHAR(100),\n  city VARCHAR(100),\n  is_verified BOOLEAN NOT NULL DEFAULT FALSE,\n  is_blocked BOOLEAN NOT NULL DEFAULT FALSE,\n  role ENUM('user', 'admin') NOT NULL DEFAULT 'user',\n  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  last_signed_in TIMESTAMP NULL\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2998
+}
